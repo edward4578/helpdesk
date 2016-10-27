@@ -11,8 +11,14 @@ class User extends Authenticatable
      *
      * @var array
      */
+    
+    public $table = 'users';
+
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 
+        'email', 
+        'password', 
+        'rol_id',
     ];
 
     /**
@@ -22,5 +28,18 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password', 'remember_token',
-    ];
+    ];/* vcx
+    ] */
+    public function roles()
+    {
+        return $this->belongsTo('App\rol', 'rol_id');
+    }
+
+    // Si el Valor esta Vacio guarda la misma Contraseña
+    public function setPasswordAttribute($valor){
+    if (!empty($valor)){
+        $this->attributes['password'] = \Hash::make($valor);
+    }
+  }
+
 }

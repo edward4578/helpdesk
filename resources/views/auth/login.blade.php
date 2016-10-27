@@ -1,15 +1,17 @@
 @extends('layouts.auth')
 
 @section('htmlheader_title')
-    Log in
+    Ingresar
 @endsection
 
 @section('content')
 <body class="hold-transition login-page">
     <div class="login-box">
-        <div class="login-logo">
-            <a href="{{ url('/home') }}"><b>Admin</b>LTE</a>
-        </div><!-- /.login-logo -->
+        <div class="login-box-body">
+
+                 <h4 align="center"><img class="img-circle" src="{{ asset('/img/icon.png') }}" alt="User Image"> Sistema HelpDesk Canaimita</h4>
+   
+        </div></br><!-- /.login-logo -->
 
     @if (count($errors) > 0)
         <div class="alert alert-danger">

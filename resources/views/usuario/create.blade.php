@@ -3,23 +3,27 @@
 @section('contentheader_title')
 <h1>Crear Usuario</h1>
 @endsection
-
+@section('localizacion')
+  <li><a href="#">Inicio</a></li>
+  <li><a href="#">Usuarios</a></li>
+  <li class="active">Crear Usuario</li>
+@endsection
 
 @section('main-content')
 <div class="row">
-    	<div class="col-md-3">
-		
-	</div>
-	<div class="col-md-6">
-		@if (count($errors) > 0)
-            <div class="alert alert-danger">
-                <strong>Error!!</strong> {{ trans('adminlte_lang::message.someproblems') }}<br><br>
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
+    <div class="col-md-3">
+
+    </div>
+    <div class="col-md-6">
+        @if (count($errors) > 0)
+        <div class="alert alert-danger">
+            <strong>Error!!</strong> {{ trans('adminlte_lang::message.someproblems') }}<br><br>
+            <ul>
+                @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
         @endif
 
         <div class="register-box-body">
@@ -42,13 +46,21 @@
                     <input type="password" class="form-control" placeholder="{{ trans('adminlte_lang::message.retrypepassword') }}" name="password_confirmation"/>
                     <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
                 </div> 
-                 <div class="form-group has-feedback">
-                <select class="form-control" name="rol_id" >
-                <option selected="selected" value="0">Seleccione..</option>
-                @foreach($roles as $rol)
-                    <option value="{!!$rol->id!!}">{!!$rol->rol!!}</option>
-                @endforeach 
-                  </select> 
+                <div class="form-group has-feedback">
+                    <select class="form-control" name="rol_id" >
+                        <option selected="selected" value="0">Seleccione..</option>
+                        @foreach($roles as $item)
+                        <option value="{!!$item->id!!}">{!!$item->rol!!}</option>
+                        @endforeach 
+                    </select> 
+                </div> 
+                <div class="form-group has-feedback">
+                    <select class="form-control" name="infocentro_id" >
+                        <option selected="selected" value="0">Seleccione..</option>
+                        @foreach($infocentros as $item)
+                        <option value="{!!$item->id!!}">{!!$item->nombre_infocentro!!}</option>
+                        @endforeach 
+                    </select> 
                 </div> 
                 <div class="row">
                     <div class="col-xs-4">
@@ -57,10 +69,10 @@
                 </div>
             </form>
         </div><!-- /.form-box -->
-	</div>
+    </div>
 
-	<div class="col-md-2">
-		
-	</div>
+    <div class="col-md-2">
+
+    </div>
 </div>
 @endsection

@@ -23,8 +23,13 @@ Route::get('logout', 'Auth\AuthController@logout');
 
 
 //Crud de Usuario//
+Route::get('usuario/listar', 'UsuarioController@listarUsuario');
 Route::resource('usuario', 'UsuarioController');
 Route::get('usuario/{id}/destroy', ['uses' => 'UsuarioController@destroy', 'as' => 'usuario.destroy']);
 
 //Crud de Beneficiario
 Route::resource('beneficiario', 'BeneficiarioController');
+
+//Estados Municipiio y Parroquias
+Route::get('beneficiario/municipios/{id}', 'BeneficiarioController@getMunicipios');
+Route::get('beneficiario/parroquias/{id}', 'BeneficiarioController@getParroquias');

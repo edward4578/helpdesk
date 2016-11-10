@@ -17,11 +17,16 @@ class CreateCreateInfocentrosTable extends Migration {
             $table->string('nombre_infocentro');
             $table->string('descripcion');
             $table->boolean('activo');
-            $table->integer('direccion_id')->unsigned();
+            $table->string('direccion')->nullable();
+            $table->integer('estado_id')->unsigned();
+            $table->integer('municipio_id')->unsigned();
+            $table->integer('parroquia_id')->unsigned();
 
-            // Campo para la tabla Direccion
-            $table->foreign('direccion_id')->references('id')->on('direccion');
-       });
+            //Claves Foraneas de estado, municipio y parroquia
+            $table->foreign('estado_id')->references('id')->on('estado');
+            $table->foreign('municipio_id')->references('id')->on('municipio');
+            $table->foreign('parroquia_id')->references('id')->on('parroquia');
+        });
     }
 
     /**

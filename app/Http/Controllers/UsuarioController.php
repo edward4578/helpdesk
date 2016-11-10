@@ -8,30 +8,29 @@ use App\Http\Requests\UsuarioUpdateRequest;
 use Illuminate\Http\Request;
 use App\User;
 use App\rol;
+use App\InfocentroModel;
 use Laracasts\Flash\Flash;
+use Illuminate\Support\Facades\Auth;
+use Yajra\Datatables\Facades\Datatables;
 
-
-class UsuarioController extends Controller
-{
+class UsuarioController extends Controller {
 
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->middleware('auth');
     }
-    
-    public function index()
-    {
+
+
+    public function index() {
 
         //Lista de Usuarios Creados
-        $usuarios = User::paginate(10);
+        $usuarios = User::all();
         return view('usuario.index')->with('usuarios', $usuarios);
-       //dd($usuarios);
-         
+        //dd($usuarios);
     }
 
     /**
@@ -39,11 +38,11 @@ class UsuarioController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
+    public function create() {
         //Vista de Creacion Usuarios
         $roles = rol::all();
-        return view('usuario.create')->with('roles', $roles);
+        $infocentros = InfocentroModel::all();
+        return view('usuario.create')->with('roles', $roles)->with('infocentros', $infocentros);
     }
 
     /**
@@ -52,19 +51,19 @@ class UsuarioController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(UsuarioCreateRequest $request)
-    {
-      
-     //Insercion de Usuarios
-     User::create([
-        'name' => $request['name'],
-        'email' => $request['email'],
-        'password' => $request['password'],
-        'rol_id' => $request['rol_id'],
-       ]);
-      //dd($request);
-      Flash::success('Se ha Registrado el Usuario Correcta'); 
-      return redirect()->route('usuario.index');
+    public function store(UsuarioCreateRequest $request) {
+
+        //Insercion de Usuarios
+        User::create([
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'password' => $request['password'],
+            'rol_id' => $request['rol_id'],
+            'infocentro_id' => $request['infocentro_id'],
+        ]);
+        //dd($request);
+        Flash::success('Se ha Registrado el Usuario Correcta');
+        return redirect()->route('usuario.index');
     }
 
     /**
@@ -73,8 +72,7 @@ class UsuarioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
+    public function show($id) {
         //
     }
 
@@ -84,12 +82,12 @@ class UsuarioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
+    public function edit($id) {
         //Edicion de un Usuario y sus Roles
-        $usuario = User::find($id); 
-        $roles = rol::lists('rol','id');
-        return View('usuario.edit')->with('usuario', $usuario)->with(array('roles' => $roles));
+        $usuario = User::find($id);
+        $roles = rol::lists('rol', 'id');
+        $infocentros = InfocentroModel::lists('nombre_infocentro', 'id');
+        return View('usuario.edit')->with('usuario', $usuario)->with(array('roles' => $roles, 'infocentros' => $infocentros));
     }
 
     /**
@@ -99,8 +97,7 @@ class UsuarioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UsuarioUpdateRequest $request, $id)
-    {
+    public function update(UsuarioUpdateRequest $request, $id) {
         //Actualizacion de un Usuario
         $usuario = user::find($id);
         $usuario->fill([
@@ -108,9 +105,10 @@ class UsuarioController extends Controller
             'email' => $request['email'],
             'password' => $request['password'],
             'rol_id' => $request['rol_id'],
-            ]);
+            'infocentro_id' => $request['infocentro_id'],
+        ]);
         $usuario->save();
-        Flash::warning('El usuario <strong>'.$usuario->nombre_usuario.'</strong> ha sido modifcado correctamente');
+        Flash::warning('El usuario <strong>' . $usuario->nombre_usuario . '</strong> ha sido modificado correctamente');
         return redirect()->route('usuario.index');
     }
 
@@ -120,12 +118,12 @@ class UsuarioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
+    public function destroy($id) {
         //Elmininacion de un usuario
         $usuario = User::find($id);
         $usuario->delete();
-        Flash::error('El usuario '.$usuario->nombre_usuario.' ha sido eliminado correctamente');
+        Flash::error('El usuario ' . $usuario->nombre_usuario . ' ha sido eliminado correctamente');
         return redirect()->route('usuario.index');
     }
+
 }

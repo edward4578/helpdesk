@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDireccionModelsTable extends Migration {
+class CreateBenefiriarioModelsTable extends Migration {
 
     /**
      * Run the migrations.
@@ -11,8 +11,13 @@ class CreateDireccionModelsTable extends Migration {
      * @return void
      */
     public function up() {
-        Schema::create('direccion', function (Blueprint $table) {
+        Schema::create('beneficiario', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('cedula')->unique();
+            $table->string('nombres');
+            $table->string('apellidos');
+            $table->string('email')->unique();
+            $table->string('telefono');
             $table->string('direccion');
             $table->integer('estado_id')->unsigned();
             $table->integer('municipio_id')->unsigned();
@@ -31,7 +36,7 @@ class CreateDireccionModelsTable extends Migration {
      * @return void
      */
     public function down() {
-        Schema::drop('direccion');
+        Schema::drop('beneficiario');
     }
 
 }

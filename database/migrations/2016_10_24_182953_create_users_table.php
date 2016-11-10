@@ -18,10 +18,12 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->integer('rol_id')->unsigned();
+            $table->integer('infocentro_id')->unsigned();
             $table->rememberToken();
             $table->timestamps();
             //Clave de Roles Foranea
             $table->foreign('rol_id')->references('id')->on('rol');
+            $table->foreign('infocentro_id')->references('id')->on('infocentros');
         });
     }
 

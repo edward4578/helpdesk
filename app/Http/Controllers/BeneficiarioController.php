@@ -2,20 +2,27 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 use App\Http\Requests;
+use App\Http\Requests\UsuarioCreateRequest;
+use App\Http\Requests\UsuarioUpdateRequest;
+use Illuminate\Http\Request;
+use App\EstadoModel;
+use App\MunicipioModel;
+use App\ParroquiaModel;
+use Laracasts\Flash\Flash;
+use Illuminate\Support\Facades\Auth;
+use Yajra\Datatables\Facades\Datatables;
 
-class BeneficiarioController extends Controller
-{
+class BeneficiarioController extends Controller {
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
+    public function index() {
         //
+
         return view('beneficiario.index');
     }
 
@@ -24,10 +31,10 @@ class BeneficiarioController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
+    public function create() {
         //
-        return view('beneficiario.create');
+        $estados = EstadoModel::all();
+        return view('beneficiario.create')->with('estados', $estados);
     }
 
     /**
@@ -36,8 +43,7 @@ class BeneficiarioController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
         //
     }
 
@@ -47,8 +53,7 @@ class BeneficiarioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
+    public function show($id) {
         //
     }
 
@@ -58,8 +63,7 @@ class BeneficiarioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
+    public function edit($id) {
         //
     }
 
@@ -70,8 +74,7 @@ class BeneficiarioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
+    public function update(Request $request, $id) {
         //
     }
 
@@ -81,8 +84,22 @@ class BeneficiarioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
+    public function destroy($id) {
         //
     }
+
+    public function getMunicipios(Request $request, $id) {
+        if ($request->ajax()) {
+            $municipios = MunicipioModel::municipios($id);
+            return response()->json($municipios);
+        }
+    }
+
+    public function getParroquias(Request $request, $id) {
+        if ($request->ajax()) {
+            $parroquias = ParroquiaModel::parroquias($id);
+            return response()->json($parroquias);
+        }
+    }
+
 }

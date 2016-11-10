@@ -17,12 +17,14 @@ class UsersTableSeeder extends Seeder {
                 'email' => 'katherin.Rivaldo@gmail.com',
                 'password' => password_hash('123456', PASSWORD_DEFAULT),
                 'rol_id' => 1,
+                'infocentro_id' => 1,
             ]);
             DB::table('users')->insert([
                 'name' => 'Juan Molina',
                 'email' => 'juan@gmail.com',
                 'password' => password_hash('123456', PASSWORD_DEFAULT),
                 'rol_id' => 2,
+                'infocentro_id' => 1,
             ]);
         } catch (Exception $ex) {
             if ($ex->getCode() == 23505) {

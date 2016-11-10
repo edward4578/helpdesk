@@ -29,6 +29,7 @@ class UsuarioCreateRequest extends Request
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|confirmed|min:6',
             'rol_id' => 'required|not_in:0',
+            'infocentro_id' => 'required|not_in:0',
         ];
     }
 }

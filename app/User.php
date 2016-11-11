@@ -42,6 +42,13 @@ class User extends Authenticatable {
         return $this->hasMany('App\beneficiario_x_canaima', 'users_id');
     }
 
+    public static function uuarioBeneficiario ($user){
+    
+        $usuario = new User();
+        $usuario->b_x_c()->where('users_id', $user);
+        
+    }
+
     // Si el Valor esta Vacio guarda la misma Contraseña
     public function setPasswordAttribute($valor) {
         if (!empty($valor)) {

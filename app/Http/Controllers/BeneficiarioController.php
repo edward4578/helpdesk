@@ -9,9 +9,11 @@ use Illuminate\Http\Request;
 use App\EstadoModel;
 use App\MunicipioModel;
 use App\ParroquiaModel;
+use App\BenefiriarioModel;
 use Laracasts\Flash\Flash;
 use Illuminate\Support\Facades\Auth;
 use Yajra\Datatables\Facades\Datatables;
+use Validator;
 
 class BeneficiarioController extends Controller {
 
@@ -20,10 +22,39 @@ class BeneficiarioController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function index() {
-        //
+    public function __construct() {
+        $this->middleware('auth');
+    }
 
-        return view('beneficiario.index');
+    private $rulesCreated = array(
+        'cedula' => array('required', 'unique:beneficiario', 'regex:/^[A-Z]{1}-\d{8}$/'),
+        'nombres' => 'required',
+        'apellidos' => 'required',
+        'email' => 'required|email|unique:beneficiario',
+        'telefono' => array('required', 'regex:/^\d{4}-\d{7}$/'),
+        'direccion' => 'required',
+        'estado_id' => 'required|not_in:0|exists:estado,id',
+        'municipio_id' => 'required|not_in:0|exists:municipio,id',
+        'parroquia_id' => 'required|not_in:0|exists:parroquia,id',
+    );
+    private $rulesMessages = array(
+        'cedula.regex' => 'la cédula debe tener el formato V-00000000',
+        'telefono.regex' => 'la telefono debe tener el formato 0000-0000000',
+        'estado_id.required' => 'El estado es obligatorio',
+        'estado_id.exists' => 'El estado no exite!',
+        'estado_id.not_in' => 'Debe Seleccionar un Estado',
+        'municipio_id.required' => 'El campo municipio es obligatorio',
+        'municipio_id.not_in' => 'Debe Seleccionar un Municipio',
+        'municipio_id.exists' => 'El campo municipio no exite!',
+        'parroquia_id.required' => 'El campo parroquia es obligatorio',
+        'parroquia_id.not_in' => 'Debe Seleccionar una Parroquia',
+        'parroquia_id.exists' => 'la parroquia no exite!',
+    );
+
+    public function index() {
+        //todos los Beneficiarios
+        $beneficiarios = BenefiriarioModel::all();
+        return view('beneficiario.index')->with('beneficiarios', $beneficiarios);
     }
 
     /**
@@ -44,7 +75,26 @@ class BeneficiarioController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request) {
-        //
+
+        $validator = Validator::make($request->all(), $this->rulesCreated, $this->rulesMessages);
+        if ($validator->fails()) {
+            return redirect('beneficiario/create')
+                            ->withErrors($validator)
+                            ->withInput();
+        }
+        $beneficiario = new BenefiriarioModel();
+        $beneficiario->cedula = $request->get('cedula');
+        $beneficiario->nombres = $request->get('nombres');
+        $beneficiario->apellidos = $request->get('apellidos');
+        $beneficiario->email = $request->get('email');
+        $beneficiario->telefono = $request->get('telefono');
+        $beneficiario->direccion = $request->get('direccion');
+        $beneficiario->estado_id = $request->get('estado_id');
+        $beneficiario->municipio_id = $request->get('municipio_id');
+        $beneficiario->parroquia_id = $request->get('parroquia_id');
+        $beneficiario->save();
+        Flash::success('Se ha Registrado el Beneficiario Correctamente');
+        return redirect()->route('beneficiario.index');
     }
 
     /**
@@ -86,6 +136,7 @@ class BeneficiarioController extends Controller {
      */
     public function destroy($id) {
         //
+        
     }
 
     public function getMunicipios(Request $request, $id) {

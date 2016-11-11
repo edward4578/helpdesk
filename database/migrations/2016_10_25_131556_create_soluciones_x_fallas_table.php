@@ -17,12 +17,12 @@ class CreateSolucionesXFallasTable extends Migration
             $table->timestamp('fecha_solucion')->useCurrent();
             $table->integer('solucion_id')->unsigned();
             $table->integer('user_id')->unsigned();
-            $table->integer('fxc_id')->unsigned();
+            $table->integer('bxc_id')->unsigned();
             
             // Clave foranea para solucion y la falla de la canaima
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('solucion_id')->references('id')->on('soluciones');
-            $table->foreign('fxc_id')->references('id')->on('fallas_x_canaimas');
+            $table->foreign('bxc_id')->references('id')->on('beneficiario_x_canaimas');
             
         });
     }

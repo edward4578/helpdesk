@@ -26,6 +26,13 @@ class UsersTableSeeder extends Seeder {
                 'rol_id' => 2,
                 'infocentro_id' => 1,
             ]);
+            DB::table('users')->insert([
+                'name' => 'Edward Flores',
+                'email' => 'edwardflores457@gmail.com',
+                'password' => password_hash('123456', PASSWORD_DEFAULT),
+                'rol_id' => 2,
+                'infocentro_id' => 1,
+            ]);
         } catch (Exception $ex) {
             if ($ex->getCode() == 23505) {
                 echo "Registros ya existentes ";

@@ -120,6 +120,7 @@ class UsuarioController extends Controller {
      */
     public function destroy($id) {
         //Elmininacion de un usuario
+        if 
         $usuario = User::find($id);
         $usuario->delete();
         Flash::error('El usuario ' . $usuario->nombre_usuario . ' ha sido eliminado correctamente');

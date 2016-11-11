@@ -33,9 +33,13 @@ class User extends Authenticatable {
     public function rol() {
         return $this->belongsTo('App\rol', 'rol_id');
     }
-    
+
     public function infocentro() {
         return $this->belongsTo('App\InfocentroModel', 'infocentro_id');
+    }
+
+    public function b_x_c() {
+        return $this->hasMany('App\beneficiario_x_canaima', 'users_id');
     }
 
     // Si el Valor esta Vacio guarda la misma Contraseña

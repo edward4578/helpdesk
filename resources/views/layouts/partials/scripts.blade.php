@@ -9,5 +9,4 @@
 
 <script src="{{ asset('/plugins/datatables/jquery.dataTables.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('/plugins/datatables/dataTables.bootstrap.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('/js/dropdown.js') }}" type="text/javascript"> </script>
 <script src="{{ asset('/js/sweetalert.min.js') }}" type="text/javascript"> </script>

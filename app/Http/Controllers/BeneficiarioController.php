@@ -116,6 +116,12 @@ class BeneficiarioController extends Controller {
      */
     public function edit($id) {
         //
+        $beneficiario = BenefiriarioModel::find($id);
+        $estados = EstadoModel::lists('estado', 'id');
+        $municipios = MunicipioModel::lists('municipio', 'id');
+        $parroquias = ParroquiaModel::lists('parroquia', 'id');
+        
+        return View('beneficiario.edit')->with('beneficiario', $beneficiario)->with(array('estados' => $estados, 'municipios' => $municipios, 'parroquias' => $parroquias));
     }
 
     /**
@@ -137,7 +143,6 @@ class BeneficiarioController extends Controller {
      */
     public function destroy($id) {
         //
-        
     }
 
     public function getMunicipios(Request $request, $id) {

@@ -124,7 +124,8 @@ class UsuarioController extends Controller {
         
         $usuario = User::find($id);
         $usuario->delete();
-        Flash::error('El usuario ' . $usuario->nombre_usuario . ' ha sido eliminado correctamente');
+        //Flash::error('El usuario ' . $usuario->nombre_usuario . ' ');
+        notify()->flash('El usuario se ha sido eliminado correctamente', 'error');
         return redirect()->route('usuario.index');
     }
 

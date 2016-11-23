@@ -93,7 +93,8 @@ class BeneficiarioController extends Controller {
         $beneficiario->municipio_id = $request->get('municipio_id');
         $beneficiario->parroquia_id = $request->get('parroquia_id');
         $beneficiario->save();
-        Flash::success('Se ha Registrado el Beneficiario Correctamente');
+        //Flash::success('Se ha Registrado el Beneficiario Correctamente');
+        notify()->flash('Se ha Registrado el Beneficiario Correctamente', 'success');
         return redirect()->route('beneficiario.index');
     }
 

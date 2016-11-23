@@ -10,6 +10,7 @@
 @endsection
 @section('main-content')
 
+
 <div class="row">	
 </div>
 
@@ -49,7 +50,18 @@
     </div>
 
 </div>
-</div>
+
+@endsection
+@section('scripts')
+@if (notify()->ready())
+    <script>
+        swal({
+            title: "{!! notify()->message() !!}",
+            text: "{!! notify()->option('text') !!}",
+            type: "{{ notify()->type() }}",
+        });
+    </script>
+@endif
 @endsection
 
 

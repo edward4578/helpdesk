@@ -62,7 +62,8 @@ class UsuarioController extends Controller {
             'infocentro_id' => $request['infocentro_id'],
         ]);
         //dd($request);
-        Flash::success('Se ha Registrado el Usuario Correcta');
+        //Flash::success('Se ha Registrado el Usuario Correcta');
+        notify()->flash('Se ha Registrado el Usuario Correctamente', 'success');
         return redirect()->route('usuario.index');
     }
 

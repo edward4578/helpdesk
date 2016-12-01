@@ -109,7 +109,7 @@ class UsuarioController extends Controller {
             'infocentro_id' => $request['infocentro_id'],
         ]);
         $usuario->save();
-        Flash::warning('El usuario <strong>' . $usuario->nombre_usuario . '</strong> ha sido modificado correctamente');
+        notify()->flash('El usuario se ha sido Actualizado correctamente', 'success');
         return redirect()->route('usuario.index');
     }
 

@@ -31,5 +31,9 @@ Route::get('usuario/{id}/destroy', ['uses' => 'UsuarioController@destroy', 'as' 
 Route::resource('beneficiario', 'BeneficiarioController');
 
 //Estados Municipiio y Parroquias
-Route::get('beneficiario/municipios/{id}', 'BeneficiarioController@getMunicipios');
-Route::get('beneficiario/parroquias/{id}', 'BeneficiarioController@getParroquias');
+//Route::get('beneficiario/municipios/{id}', 'BeneficiarioController@getMunicipios');
+//Route::get('beneficiario/parroquias/{id}', 'BeneficiarioController@getParroquias');
+
+
+Route::get('municipios/{id}', 'BeneficiarioController@getMunicipios');
+Route::get('parroquias/{id}', 'BeneficiarioController@getParroquias');

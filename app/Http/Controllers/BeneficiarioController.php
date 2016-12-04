@@ -37,6 +37,17 @@ class BeneficiarioController extends Controller {
         'municipio_id' => 'required|not_in:0|exists:municipio,id',
         'parroquia_id' => 'required|not_in:0|exists:parroquia,id',
     );
+    private $rulesUpdate = array(
+        'cedula' => array('required', 'exists:beneficiario,cedula', 'regex:/^[A-Z]{1}-\d{8}$/'),
+        'nombres' => 'required',
+        'apellidos' => 'required',
+        'email' => 'required|email|exists:beneficiario,email',
+        'telefono' => array('required', 'regex:/^\d{4}-\d{7}$/'),
+        'direccion' => 'required',
+        'estado_id' => 'required|not_in:0|exists:estado,id',
+        'municipio_id' => 'required|not_in:0|exists:municipio,id',
+        'parroquia_id' => 'required|not_in:0|exists:parroquia,id',
+    );
     private $rulesMessages = array(
         'cedula.regex' => 'la cédula debe tener el formato V-00000000',
         'telefono.regex' => 'la telefono debe tener el formato 0000-0000000',
@@ -120,7 +131,7 @@ class BeneficiarioController extends Controller {
         $estados = EstadoModel::lists('estado', 'id');
         $municipios = MunicipioModel::lists('municipio', 'id');
         $parroquias = ParroquiaModel::lists('parroquia', 'id');
-        
+
         return View('beneficiario.edit')->with('beneficiario', $beneficiario)->with(array('estados' => $estados, 'municipios' => $municipios, 'parroquias' => $parroquias));
     }
 
@@ -132,6 +143,29 @@ class BeneficiarioController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id) {
+
+        $validator = Validator::make($request->all(), $this->rulesUpdate, $this->rulesMessages);
+        if ($validator->fails()) {
+            return redirect('beneficiario/' . $id . '$id/create')
+                            ->withErrors($validator)
+                            ->withInput();
+        }
+        $beneficiario = BenefiriarioModel::find($id);
+        if (is_null($beneficiario)) {
+            notify()->flash('El Beneficiario no exite', 'error');
+            return redirect()->route('beneficiario.index');
+        }
+        $beneficiario->nombres = $request->get('nombres');
+        $beneficiario->apellidos = $request->get('apellidos');
+        $beneficiario->telefono = $request->get('telefono');
+        $beneficiario->direccion = $request->get('direccion');
+        $beneficiario->estado_id = $request->get('estado_id');
+        $beneficiario->municipio_id = $request->get('municipio_id');
+        $beneficiario->parroquia_id = $request->get('parroquia_id');
+        $beneficiario->save();
+        //Flash::success('Se ha Registrado el Beneficiario Correctamente');
+        notify()->flash('El Beneficiario  se ha actualizado correctamente', 'success');
+        return redirect()->route('beneficiario.index');
         //
     }
 
@@ -143,6 +177,11 @@ class BeneficiarioController extends Controller {
      */
     public function destroy($id) {
         //
+        $usuario = BenefiriarioModel::find($id);
+        $usuario->delete();
+        //Flash::error('El usuario ' . $usuario->nombre_usuario . ' ');
+        notify()->flash('El Beneficiario se ha sido eliminado correctamente', 'error');
+        return redirect()->route('usuario.index');
     }
 
     public function getMunicipios(Request $request, $id) {

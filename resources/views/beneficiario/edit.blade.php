@@ -50,7 +50,7 @@
                 <span class="fa fa-phone form-control-feedback"></span>
             </div>
             <div class="form-group has-feedback">
-                <textarea class="form-control" rows="3" placeholder="Dirección Completa" name="direccion" value="{{$beneficiario->direccion}}"></textarea>
+                <textarea class="form-control" rows="3" placeholder="Dirección Completa" name="direccion">{{$beneficiario->direccion}}</textarea>
                 <span class="fa fa-building form-control-feedback"></span>
             </div>
             <div class="form-group has-feedback">
@@ -64,7 +64,7 @@
             </div> 
             <div class="row">
                 <div class="col-xs-4">
-                    <button type="submit" class="btn btn-success btn-block btn-flat"><span class="fa fa-save" aria-hidden="true"> Agregar</span></button>
+                    <button type="submit" class="btn btn-success btn-block btn-flat"><span class="fa fa-save" aria-hidden="true"> Actualizar</span></button>
                 </div><!-- /.col -->
                 <div class="col-xs-4">
                     <a class="btn btn-primary btn-block btn-flat" href="{{ route('beneficiario.index') }}" role="button"><span class="fa fa-chevron-left" aria-hidden="true"> Regresar</span></a>
@@ -78,4 +78,7 @@
 
     </div>
 </div>
+@endsection
+@section('scripts')
+<script src="{{ asset('/js/dropdown.js') }}" type="text/javascript"> </script>
 @endsection

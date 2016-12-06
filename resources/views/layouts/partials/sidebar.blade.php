@@ -51,7 +51,7 @@
             <li class="treeview">
                 <a href="#"><i class='fa fa-link'></i>Canaimas <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
-                    <li><a href="#"><i class='fa fa-plus-circle'></i> Crear Canaima </li>
+                    <li><a href="{{ route('canaima.create') }}"><i class='fa fa-plus-circle'></i> Crear Canaima </li>
                     <li><a href="#"><i class='fa fa-edit'></i> Modificar Canaima</li>
                     <li><a href="#"><i class='fa fa-reorder'></i> Lista de Canaimas</li>
                 </ul>

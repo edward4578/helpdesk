@@ -20,4 +20,10 @@ class InfocentroModel extends Model {
     ];
     public $timestamps = false;
 
+    public static function infocentros() {
+
+        $modelCanaima = self::orderBy('nombre_infocentro', 'desc')->get();
+        return $modelCanaima;
+    }
+
 }

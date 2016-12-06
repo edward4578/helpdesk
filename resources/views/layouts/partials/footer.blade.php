@@ -1,9 +1,15 @@
 <!-- Main Footer -->
-<footer class="main-footer">
+<footer class="main-footer ">
+
     <!-- To the right -->
-    <div class="pull-right hidden-xs">
-     <strong>Copyright &copy;2016</strong> Todos Los derecho reservados</a>
+    <div class="row">
+        <div class="col-lg-3">
+        </div>
+        <div class="col-lg-8">
+            <img class="img-responsive" alt="Imagen responsive" src="img/footer1.png" height="100" width="800"/>
+        </div>
+        <div class="col-lg-3">  
+        </div>
     </div>
-    <!-- Default to the left -->
-     <strong>Sistemas Helpdesk Canaimita</strong>
+
 </footer>

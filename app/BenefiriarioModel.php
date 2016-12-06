@@ -34,4 +34,8 @@ class BenefiriarioModel extends Model {
         return $this->belongsTo('App\ParroquiaModel', 'municipio_id');
     }
 
+    public static function beneficiarios(){
+        $beneficiarioModel = self::lists('id','cedula');
+        return $beneficiarioModel; 
+    }
 }

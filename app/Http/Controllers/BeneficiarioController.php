@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests;
-use App\Http\Requests\UsuarioCreateRequest;
-use App\Http\Requests\UsuarioUpdateRequest;
 use Illuminate\Http\Request;
 use App\EstadoModel;
 use App\MunicipioModel;

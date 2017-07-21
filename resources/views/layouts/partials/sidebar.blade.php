@@ -43,9 +43,9 @@
             <li class="treeview">
                 <a href="#"><i class='fa fa-link'></i> Infocentros <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
-                    <li><a href="#"><i class='fa fa-plus-circle'></i> Crear Infocentro</li>
+                    <li><a href="{{ route('infocentro.create') }}"><i class='fa fa-plus-circle'></i> Crear Infocentro</li>
                     <li><a href="#"><i class='fa fa-edit'></i> Modificar Infocentros</li>
-                    <li><a href="#"><i class='fa fa-reorder'></i> Lista de Beneficiarios</li>
+                    <li><a href="{{ route('infocentro.index') }}"><i class='fa fa-reorder'></i> Lista de Infocentros</li>
                 </ul>
             </li>
             <li class="treeview">

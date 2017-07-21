@@ -20,10 +20,21 @@ class InfocentroModel extends Model {
     ];
     public $timestamps = false;
 
-    public static function infocentros() {
-
-        $modelCanaima = self::orderBy('nombre_infocentro', 'desc')->get();
-        return $modelCanaima;
+    public function estado() {
+        return $this->belongsTo('App\EstadoModel', 'estado_id');
     }
 
+    public function municipio() {
+        return $this->belongsTo('App\MunicipioModel', 'municipio_id');
+    }
+
+    public function parroquia() {
+        return $this->belongsTo('App\ParroquiaModel', 'municipio_id');
+    }
+
+    public static function infocentros() {
+
+        $infocentros = self::orderBy('nombre_infocentro', 'ASC')->get();
+        return $infocentros;
+    }
 }

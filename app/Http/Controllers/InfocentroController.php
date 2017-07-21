@@ -100,7 +100,6 @@ class InfocentroController extends Controller {
             //return View('infocentro.edit')->with('infocentro', $infocentro)->with(array('estados' => $estados, 'municipios' => $municipios, 'parroquias' => $parroquias));
         }
     }
-
     public function destroy() {
         
     }

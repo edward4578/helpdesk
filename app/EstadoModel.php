@@ -14,4 +14,6 @@ class EstadoModel extends Model {
     ];
     public $timestamps = false;
 
+    
+    
 }

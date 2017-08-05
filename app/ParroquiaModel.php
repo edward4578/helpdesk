@@ -20,4 +20,8 @@ class ParroquiaModel extends Model {
                         ->get();
     }
 
+    public function municipio() {
+        return $this->belongsTo('App\MunicipioModel', 'municipio_id');
+    }
+
 }

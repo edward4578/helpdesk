@@ -16,22 +16,12 @@ class BenefiriarioModel extends Model {
         'telefono',
         'email',
         'direccion',
-        'estado_id',
-        'municipio_id',
         'parroquia_id',
     ];
     public $timestamps = false;
 
-    public function estado() {
-        return $this->belongsTo('App\EstadoModel', 'estado_id');
-    }
-
-    public function municipio() {
-        return $this->belongsTo('App\MunicipioModel', 'municipio_id');
-    }
-
     public function parroquia() {
-        return $this->belongsTo('App\ParroquiaModel', 'municipio_id');
+        return $this->belongsTo('App\ParroquiaModel', 'parroquia_id');
     }
 
     public static function beneficiarios(){

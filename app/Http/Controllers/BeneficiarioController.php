@@ -98,8 +98,6 @@ class BeneficiarioController extends Controller {
         $beneficiario->email = $request->get('email');
         $beneficiario->telefono = $request->get('telefono');
         $beneficiario->direccion = $request->get('direccion');
-        $beneficiario->estado_id = $request->get('estado_id');
-        $beneficiario->municipio_id = $request->get('municipio_id');
         $beneficiario->parroquia_id = $request->get('parroquia_id');
         $beneficiario->save();
         //Flash::success('Se ha Registrado el Beneficiario Correctamente');
@@ -126,11 +124,10 @@ class BeneficiarioController extends Controller {
     public function edit($id) {
         //
         $beneficiario = BenefiriarioModel::find($id);
-        $estados = EstadoModel::lists('estado', 'id');
-        $municipios = MunicipioModel::lists('municipio', 'id');
-        $parroquias = ParroquiaModel::lists('parroquia', 'id');
-
-        return View('beneficiario.edit')->with('beneficiario', $beneficiario)->with(array('estados' => $estados, 'municipios' => $municipios, 'parroquias' => $parroquias));
+        $estados = EstadoModel::all(); 
+//dd($beneficiario->parroquia->municipio->estado);
+        
+        return View('beneficiario.edit')->with('beneficiario', $beneficiario)->with('estados', $estados);
     }
 
     /**
@@ -141,10 +138,9 @@ class BeneficiarioController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id) {
-
         $validator = Validator::make($request->all(), $this->rulesUpdate, $this->rulesMessages);
         if ($validator->fails()) {
-            return redirect('beneficiario/' . $id . '$id/create')
+            return redirect('beneficiario/' . $id . '/edit')
                             ->withErrors($validator)
                             ->withInput();
         }
@@ -157,8 +153,6 @@ class BeneficiarioController extends Controller {
         $beneficiario->apellidos = $request->get('apellidos');
         $beneficiario->telefono = $request->get('telefono');
         $beneficiario->direccion = $request->get('direccion');
-        $beneficiario->estado_id = $request->get('estado_id');
-        $beneficiario->municipio_id = $request->get('municipio_id');
         $beneficiario->parroquia_id = $request->get('parroquia_id');
         $beneficiario->save();
         //Flash::success('Se ha Registrado el Beneficiario Correctamente');

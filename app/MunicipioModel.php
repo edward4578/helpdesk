@@ -20,4 +20,8 @@ class MunicipioModel extends Model {
                         ->get();
     }
 
+    public function estado() {
+        return $this->belongsTo('App\EstadoModel', 'estado_id');
+    }
+
 }

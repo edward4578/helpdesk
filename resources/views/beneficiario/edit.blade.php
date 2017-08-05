@@ -54,13 +54,22 @@
                 <span class="fa fa-building form-control-feedback"></span>
             </div>
             <div class="form-group has-feedback">
-                {!!Form::select('estado_id', $estados, null, ['class'=>'form-control', 'id'=>'estado']);!!}
+                <select class="form-control" id="estado" name="estado_id">
+                    <option value="{{$beneficiario->parroquia->municipio->estado->id}}" selected="selected">{{$beneficiario->parroquia->municipio->estado->estado}}</option>
+                    @foreach($estados as $item)
+                    <option value="{!!$item->id!!}">{!!$item->estado!!}</option>
+                    @endforeach 
+                </select>
             </div>
             <div class="form-group has-feedback">
-                {!!Form::select('municipio_id', $municipios, null, ['class'=>'form-control', 'id'=>'municipio']);!!}
+                <select class="form-control" id="municipio" name="municipio_id">
+                    <option value="{{$beneficiario->parroquia->municipio->id}}"> {{$beneficiario->parroquia->municipio->municipio}}</option>             
+                </select>
             </div> 
             <div class="form-group has-feedback">
-                {!!Form::select('parroquia_id', $parroquias, null, ['class'=>'form-control', 'id'=>'parroquia']);!!} 
+                <select class="form-control" id="parroquia"  name="parroquia_id">
+                    <option value="{{$beneficiario->parroquia->id}}"> {{$beneficiario->parroquia->parroquia}}</option>             
+                </select>
             </div> 
             <div class="row">
                 <div class="col-xs-4">
@@ -80,5 +89,5 @@
 </div>
 @endsection
 @section('scripts')
-<script src="{{ asset('/js/dropdown.js') }}" type="text/javascript"> </script>
+<script src="{{ asset('/js/dropdown.js') }}" type="text/javascript"></script>
 @endsection

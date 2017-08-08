@@ -15,9 +15,11 @@ class CreateReport extends Migration {
         Schema::create('reporte', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamp('fecha')->useCurrent();
+            $table->string('serial_canaima');
             $table->text('descripcion');
             $table->integer('infocentro_id')->unsigned();
             $table->integer('canaima_id')->unsigned();
+            
             $table->integer('beneficiario_id')->unsigned();
             $table->integer('users_id')->unsigned();
             $table->integer('estatus_id')->unsigned();

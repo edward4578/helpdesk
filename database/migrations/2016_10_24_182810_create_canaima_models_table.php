@@ -14,7 +14,6 @@ class CreateCanaimaModelsTable extends Migration
     {
         Schema::create('canaima', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('serial');
             $table->string('modelo');
         });
     }

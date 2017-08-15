@@ -1,4 +1,4 @@
-@extends('layouts.app')
+    @extends('layouts.app')
 
 @section('contentheader_title')
 <h1>Lista de Usuario</h1>

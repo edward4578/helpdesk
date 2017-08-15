@@ -38,12 +38,12 @@
                 <td>{!!$item->nombre_infocentro!!}</td>
                 <td>{!!$item->mir!!}</td>
                 @if ($item->activo == 1)   
-                <td><span class="btn btn-success id="{!!$item->activo!!}">Activo</span></td>
+                <td><span class="btn btn-success" id="{!!$item->activo!!}">Activo</span></td>
                 @else
                 <td><span class="btn btn-warning" id="{!!$item->activo!!}">Inactivo</span></td>
                 @endif
                 <td><a class="btn btn-primary btn-xs"  href="{{ route('infocentro.edit', $item->id) }}" role="button"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
-                    <a class="btn btn-danger btn-xs" href="{{ route('infocentro.destroy', $item->id) }}" onclick="return confirm('¿Seguro que deseas eliminarlo?')" role="button"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></a></td> 
+                    <a class="btn btn-danger btn-xs" href="{{ route('infocentro.destroy', $item->id) }}" role="button"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></a></td> 
                 </tbody>
                 @endforeach
             </table>
@@ -55,6 +55,31 @@
 
 @endsection
 @section('scripts')
+<script>
+    $('.btn.btn-danger.btn-xs').click(function (event) {
+        event.preventDefault();
+        var href = $(this).attr('href');
+
+        swal({
+            title: "Estas seguro que desea elimnar el Registro?",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Si, Eliminar!",
+            cancelButtonText: "No, Cancelar!",
+            closeOnConfirm: true,
+            closeOnCancel: true
+        },
+                function (isConfirm) {
+                    if (isConfirm) {
+                        window.location.href = href;
+                        
+                    }
+                });
+
+        return false;
+    });
+</script>
 @if (notify()->ready())
     <script>
         swal({

@@ -10,9 +10,13 @@ class CanaimaModel extends Model {
 
     public $table = 'canaima';
     protected $fillable = [
-        'serial',
         'modelo',
     ];
     public $timestamps = false;
 
+public static function canaimas(){
+    $canaimas = self::orderBy('modelo', 'ASC')->get();
+        return $canaimas;
+}
+    
 }

@@ -37,7 +37,7 @@ class canaimaController extends Controller {
      */
     public function index() {
         //
-        $canaimas = CanaimaModel::canaimas();
+        $canaimas = CanaimaModel::listCanaima();
         return view('canaima.index')->with(array('canaimas' => $canaimas));
     }
 
@@ -111,18 +111,14 @@ class canaimaController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function destroy($id) {
-
-        $canaima = beneficiario_x_canaima::canaima_exist($id);
+        $result = CanaimaModel::getCanaima($id);
         
-        dd($canaima);
-        if ($canaima == true) {
-            notify()->flash('El Modelo de Canaima no se Puede Eliminar', 'warning');
+       // dd($result);
+        if (emptyArray(!$result)) {
+            notify()->flash('Esta vacio', 'warning');
             return redirect()->route('canaima.index');
         }
 
-        $canaima = CanaimaModel::find($id);
-        $canaima->delete();
-        notify()->flash('El Modelo de Canaima se ha Eliminado Correctamente', 'error');
         return redirect()->route('canaima.index');
     }
 

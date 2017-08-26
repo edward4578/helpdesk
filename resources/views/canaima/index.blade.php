@@ -31,7 +31,7 @@
                         <td>{!!$item->id!!}</td>
                         <td>{!!$item->modelo!!}</td>
                         @if ($item->activo == 1)
-                        <td><span class="btn btn-xs btn-success">Activo</span></td>
+                        <td><span class="btn btn-xs btn-success">Activo</span></td> 
                         @else
                         <td><span class="btn btn-xs btn-warning">Desactivado</span></td>
                         @endif

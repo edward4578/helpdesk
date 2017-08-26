@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\BenefiriarioModel;
 use Exception;
+use SoftDeletes;
 class CanaimaModel extends Model {
 
     //
@@ -13,6 +14,7 @@ class CanaimaModel extends Model {
     protected $fillable = [
         'modelo',
     ];
+    protected $dates = ['deleted_at'];
     public $timestamps = false;
 
     public function canaimas() {
@@ -25,13 +27,15 @@ class CanaimaModel extends Model {
         return $canaimaModel;
     }
 
-    public static function getCanaima($id) {
-        $canaimaModel = self::find($id)->canaimas;
-        
+    public static function deleteCanaima($id) {
+    $canaimaModel = self::find($id);
         if (is_null($canaimaModel)) {
-            throw new Exception(null, config('constants.HTTP_STATUS.NOT_FOUND'));
+         $msg = config('constants.PROCESS_STATES.ERROR_DATA_NOT_FOUND');
+          return $msg;
         }
-        return $canaimaModel;
+     $canaimaModel->delete();
+     $msg = config('constants.PROCESS_STATES.OK');
+     return $msg;
     }
 
 }

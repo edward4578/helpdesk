@@ -15,6 +15,7 @@ class CreateCanaimaModelsTable extends Migration
         Schema::create('canaima', function (Blueprint $table) {
             $table->increments('id');
             $table->string('modelo');
+            $table->softDeletes();
             $table->boolean('activo')->default(true);
         });
     }

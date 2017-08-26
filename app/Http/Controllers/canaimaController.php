@@ -13,6 +13,8 @@ use Laracasts\Flash\Flash;
 use Illuminate\Support\Facades\Auth;
 use Yajra\Datatables\Facades\Datatables;
 use Validator;
+use Exception;
+use Log;
 
 class canaimaController extends Controller {
 
@@ -111,15 +113,21 @@ class canaimaController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function destroy($id) {
-        $result = CanaimaModel::getCanaima($id);
-        
-       // dd($result);
-        if (emptyArray(!$result)) {
-            notify()->flash('Esta vacio', 'warning');
-            return redirect()->route('canaima.index');
+        try {
+            $result = CanaimaModel::deleteCanaima($id);
+            if ($result == 100) {
+                notify()->flash('Se ha eliminado Safisfactoriamente', 'success');
+                return redirect()->route('canaima.index');
+            }
+        } catch (Exception $e) {
+            Log::error('CanaimaController@getZonesByPoint: ' . $e->getMessage());
+            $code = $e->getCode();
+            $this->processingError($code);
+            if ($code == 23000) {
+                notify()->flash('No se puede eliminar porque esta asociado a un beneficiario', 'warning');
+                return redirect()->route('canaima.index');
+            }
         }
-
-        return redirect()->route('canaima.index');
     }
 
     public function getBeneficiarios(Request $request) {

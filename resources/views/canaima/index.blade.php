@@ -21,6 +21,7 @@
                     <tr>
                         <th>ID</th>
                         <th>modelo</th>
+                        <th>Activo</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -29,6 +30,11 @@
                     <tr data-id="{{$item->id}}">
                         <td>{!!$item->id!!}</td>
                         <td>{!!$item->modelo!!}</td>
+                        @if ($item->activo == 1)
+                        <td><span class="btn btn-xs btn-success">Activo</span></td> 
+                        @else
+                        <td><span class="btn btn-xs btn-warning">Desactivado</span></td>
+                        @endif
                         <td>
                             <a class="btn btn-primary btn-xs"  href="{{ route('canaima.edit', $item->id) }}" role="button"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
                             <a class="btn btn-danger btn-xs"href="{{ route('canaima.destroy', $item->id) }}"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></a>

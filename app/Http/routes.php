@@ -35,10 +35,11 @@ Route::get('canaima/{id}/destroy', ['uses' => 'canaimaController@destroy', 'as' 
 
 
 //Crud de Infocentros
-Route::get('infocentros', [ 'as' => 'infocentro.index', 'uses' => 'InfocentroController@index']);
-Route::get('infocentros/create', [ 'as' => 'infocentro.create', 'uses' => 'InfocentroController@create']);
-Route::get('infocentros/edit/{id}', [ 'as' => 'infocentro.edit', 'uses' => 'InfocentroController@edit']);
-Route::post('infocentros', [ 'as' => 'infocentro.store', 'uses' => 'InfocentroController@store']);
+Route::resource('infocentro', 'InfocentroController');
+//Route::get('infocentros', [ 'as' => 'infocentro.index', 'uses' => 'InfocentroController@index']);
+//Route::get('infocentros/create', [ 'as' => 'infocentro.create', 'uses' => 'InfocentroController@create']);
+//Route::get('infocentros/edit/{id}', [ 'as' => 'infocentro.edit', 'uses' => 'InfocentroController@edit']);
+//Route::post('infocentros', [ 'as' => 'infocentro.store', 'uses' => 'InfocentroController@store']);
 Route::get('infocentros/{id}/destroy', ['uses' => 'InfocentroController@destroy', 'as' => 'infocentro.destroy']);
 
 

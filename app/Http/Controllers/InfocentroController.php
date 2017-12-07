@@ -93,13 +93,36 @@ class InfocentroController extends Controller {
             notify()->flash('El Infocentro no exite verifique!', 'warning');
             return redirect()->route('infocentro.index');
         } else {
-            $estados = EstadoModel::lists('estado', 'id');
-            $municipios = MunicipioModel::lists('municipio', 'id');
-            $parroquias = ParroquiaModel::lists('parroquia', 'id');
-            dd($infocentro);
-            //return View('infocentro.edit')->with('infocentro', $infocentro)->with(array('estados' => $estados, 'municipios' => $municipios, 'parroquias' => $parroquias));
+            $estados = EstadoModel::all();
+            return View('infocentro.edit')->with('infocentro', $infocentro)->with('estados', $estados);
         }
     }
+
+    public function update(Request $request, $id) {
+        $validator = Validator::make($request->all(), $this->rulesUpdate, $this->rulesMessages);
+        if ($validator->fails()) {
+            return redirect('infocentro/' . $id . '/edit')
+                            ->withErrors($validator)
+                            ->withInput();
+        }
+        $infocentro = InfocentroModel::find($id);
+        if (is_null($infocentro)) {
+            notify()->flash('El infocentro no exite', 'error');
+            return redirect()->route('infocentro.index');
+        }
+        $infocentro->mir = $request->get('mir');
+        $infocentro->nombre_infocentro = $request->get('nombre_infocentro');
+        $infocentro->descripcion = $request->get('descripcion');
+        $infocentro->activo = $request->get('activo');
+        $infocentro->direccion = $request->get('direccion');
+        $infocentro->parroquia_id = $request->get('parroquia_id');
+        $infocentro->save();
+        //Flash::success('Se ha Registrado el Beneficiario Correctamente');
+        notify()->flash('El infocentro se ha actualizado correctamente', 'success');
+        return redirect()->route('infocentro.index');
+        //
+    }
+
     public function destroy() {
         
     }

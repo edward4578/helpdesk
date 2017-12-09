@@ -38,7 +38,7 @@ class canaimaController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        //
+//
         $canaimas = CanaimaModel::listCanaima();
         return view('canaima.index')->with(array('canaimas' => $canaimas));
     }
@@ -49,7 +49,7 @@ class canaimaController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function create() {
-        //
+//
         return view('canaima.create');
     }
 
@@ -60,7 +60,7 @@ class canaimaController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request) {
-        //
+//
         $validator = Validator::make($request->all(), $this->rulesCreated, $this->rulesMessages);
         if ($validator->fails()) {
             return redirect('canaima/create')
@@ -70,7 +70,7 @@ class canaimaController extends Controller {
         $canaima = new CanaimaModel();
         $canaima->modelo = $request->get('modelo');
         $canaima->save();
-        //Flash::success('Se ha Registrado el Beneficiario Correctamente');
+//Flash::success('Se ha Registrado el Beneficiario Correctamente');
         notify()->flash('Se ha Registrado el Modelo de Cainama Correctamente', 'success');
         return redirect()->route('canaima.index');
     }
@@ -82,7 +82,7 @@ class canaimaController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function show($id) {
-        //
+//
     }
 
     /**
@@ -92,7 +92,14 @@ class canaimaController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function edit($id) {
-        //
+//
+        $canaima = CanaimaModel::findOrFail($id);
+        if (!$canaima) {
+            notify()->flash('la canaima no exite verifique!', 'warning');
+            return redirect()->route('canaima.index');
+        } else {
+            return View('canaima.edit')->with('canaima', $canaima);
+        }
     }
 
     /**
@@ -103,7 +110,22 @@ class canaimaController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id) {
-        //
+        $validator = Validator::make($request->all(), $this->rulesUpdate, $this->rulesMessages);
+        if ($validator->fails()) {
+            return redirect('canaima/' . $id . '/edit')
+                            ->withErrors($validator)
+                            ->withInput();
+        }
+        $canaima = CanaimaModel::find($id);
+        if (is_null($canaima)) {
+            notify()->flash('la canaima no exite', 'error');
+            return redirect()->route('canaima.index');
+        }
+        $canaima = new CanaimaModel();
+        $canaima->modelo = $request->get('modelo');
+        $canaima->save();
+        notify()->flash('Se ha Actualizado el Modelo de Cainama Correctamente', 'success');
+        return redirect()->route('canaima.index');
     }
 
     /**

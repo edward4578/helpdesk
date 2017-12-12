@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
 @section('contentheader_title')
-<h1>Crear canaima </h1>
+<h1>Actualizar Falla </h1>
 @endsection
 @section('localizacion')
 <li><a href="#">Inicio</a></li>
-<li><a href="#">Canaima</a></li>
-<li class="active">Crear Canaima</li>
+<li><a href="#">Falla</a></li>
+<li class="active">Actualizar Falla</li>
 @endsection
 @section('main-content')
 @if (count($errors) > 0)
@@ -19,12 +19,12 @@
             </ul>
         </div>
         @endif
- {!!Form::model($canaima, ['route' => ['canaima.update', $canaima->id], 'method' => 'PUT'])!!}        
+ {!!Form::model($falla, ['route' => ['falla.update', $falla->id], 'method' => 'PUT'])!!}  
     <input type="hidden" name="_token" value="{{ csrf_token() }}">           
 
     <div class="box box-solid box-primary">
         <div class="box-header with-border">
-            <h3 class="box-title">Acualización de Canaima</h3>
+            <h3 class="box-title">Actualizar Falla</h3>
         </div>
         <!-- /.box-header -->
         <!-- form start -->
@@ -32,8 +32,11 @@
         <div class="box-body">
             <div class="col-md-offset-3 col-md-6">
                 <div class="form-group">
-                    <label >Modelo de Canaima</label>
-                    <input id="modelo" name="modelo" value="{{$canaima->modelo}}" class="form-control"> 
+                    <label >Descripcion de la Falla</label>
+                    <div class="form-group has-feedback">
+                    <textarea class="form-control" rows="3" name="falla">{{ $falla->falla }}</textarea>
+                    <span class="fa fa-building form-control-feedback"></span>
+                </div>
                 </div>
                 <!-- /.box-body -->
                 <div class="box-footer">

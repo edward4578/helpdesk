@@ -52,16 +52,14 @@
                 <a href="#"><i class='fa fa-link'></i>Canaimas <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
                     <li><a href="{{ route('canaima.create') }}"><i class='fa fa-plus-circle'></i> Crear Canaima </a></li>
-                    <li><a href="#"><i class='fa fa-edit'></i> Modificar Canaima</a></li>
                     <li><a href="{{ route('canaima.index') }}"><i class='fa fa-reorder'></i> Lista de Canaimas</a></li>
                 </ul>
             </li>
             <li class="treeview">
                 <a href="#"><i class='fa fa-link'></i>Fallas <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
-                    <li><a href="#"><i class='fa fa-plus-circle'></i>Crear Falla</a></li>
-                    <li><a href="#"><i class='fa fa-edit'></i> Modificar Falla </a></li>
-                    <li><a href="#"><i class='fa fa-reorder'></i> Lista de Fallas</a></li>
+                    <li><a href="{{ route('falla.create') }}"><i class='fa fa-plus-circle'></i>Crear Falla</a></li>
+                    <li><a href="{{ route('falla.index') }}"><i class='fa fa-reorder'></i> Lista de Fallas</a></li>
                 </ul>
             </li>
             <li class="treeview">

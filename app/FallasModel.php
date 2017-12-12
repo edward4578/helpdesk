@@ -18,4 +18,15 @@ class FallasModel extends Model {
         return $modelFallas;
     }
 
+    public static function deleteFalla($id) {
+        $fallaModel = self::find($id);
+        if (is_null($fallaModel)) {
+            $msg = config('constants.PROCESS_STATES.ERROR_DATA_NOT_FOUND');
+            return $msg;
+        }
+        $fallaModel->delete();
+        $msg = config('constants.PROCESS_STATES.OK');
+        return $msg;
+    }
+
 }

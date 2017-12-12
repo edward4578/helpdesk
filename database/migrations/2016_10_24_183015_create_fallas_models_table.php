@@ -14,7 +14,7 @@ class CreateFallasModelsTable extends Migration
     {
         Schema::create('fallas', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('falla');
+            $table->text('falla');
         });
     }
 

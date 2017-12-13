@@ -38,12 +38,13 @@ Route::get('canaima/{id}/destroy', ['uses' => 'canaimaController@destroy', 'as' 
 Route::resource('infocentro', 'InfocentroController');
 Route::get('infocentros/{id}/destroy', ['uses' => 'InfocentroController@destroy', 'as' => 'infocentro.destroy']);
 
-
 //Crud de Fallas 
 Route::resource('falla','FallasController');
 Route::get('falla/{id}/destroy', ['uses' => 'FallasController@destroy', 'as' => 'falla.destroy']);
 
-
+//Crud de Soluciones 
+Route::resource('solucion','SolucionesController');
+Route::get('solucion/{id}/destroy', ['uses' => 'SolucionesController@destroy', 'as' => 'solucion.destroy']);
 
 
 //Estados Municipiio y Parroquias AJAX

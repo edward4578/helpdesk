@@ -12,6 +12,8 @@ class CreateBenefiriarioModelsTable extends Migration {
      */
     public function up() {
         Schema::create('beneficiario', function (Blueprint $table) {
+            $table->collation = 'utf8_general_ci';
+            $table->charset = 'utf8';
             $table->increments('id');
             $table->string('cedula')->unique();
             $table->string('nombres');

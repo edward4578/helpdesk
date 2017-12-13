@@ -13,6 +13,8 @@ class CreateReport extends Migration {
     public function up() {
         //
         Schema::create('reporte', function (Blueprint $table) {
+            $table->collation = 'utf8_general_ci';
+            $table->charset = 'utf8';
             $table->increments('id');
             $table->timestamp('fecha')->useCurrent();
             $table->string('serial_canaima');

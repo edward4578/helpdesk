@@ -13,6 +13,8 @@ class CreateBeneficiarioXCanaima extends Migration {
     public function up() {
         //
         Schema::create('beneficiario_x_canaima', function (Blueprint $table) {
+            $table->collation = 'utf8_general_ci';
+            $table->charset = 'utf8';
             $table->increments('id');
             $table->string('serial_canaima');
             $table->text('descripcion');
@@ -30,7 +32,7 @@ class CreateBeneficiarioXCanaima extends Migration {
      */
     public function down() {
         //
-         Schema::drop('beneficiario_x_canaima');
+        Schema::drop('beneficiario_x_canaima');
     }
 
 }

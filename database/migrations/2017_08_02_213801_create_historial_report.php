@@ -13,6 +13,8 @@ class CreateHistorialReport extends Migration {
     public function up() {
         //
         Schema::create('historialReporte', function (Blueprint $table) {
+            $table->collation = 'utf8_general_ci';
+            $table->charset = 'utf8';
             $table->increments('id');
             $table->string('descripcion')->nullable();
             $table->integer('reporte_id')->unsigned();

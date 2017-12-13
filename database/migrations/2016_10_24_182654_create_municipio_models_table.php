@@ -12,6 +12,8 @@ class CreateMunicipioModelsTable extends Migration {
      */
     public function up() {
         Schema::create('municipio', function (Blueprint $table) {
+            $table->collation = 'utf8_general_ci';
+            $table->charset = 'utf8';
             $table->increments('id');
             $table->string('municipio');
             $table->integer('estado_id')->unsigned();

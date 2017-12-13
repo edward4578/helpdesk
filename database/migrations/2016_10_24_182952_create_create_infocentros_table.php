@@ -12,6 +12,8 @@ class CreateCreateInfocentrosTable extends Migration {
      */
     public function up() {
         Schema::create('infocentros', function (Blueprint $table) {
+            $table->collation = 'utf8_general_ci';
+            $table->charset = 'utf8';
             $table->increments('id');
             $table->string('mir');
             $table->string('nombre_infocentro');

@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateHistorialReport extends Migration {
+class CreateHistorialTicket extends Migration {
 
     /**
      * Run the migrations.
@@ -12,16 +12,16 @@ class CreateHistorialReport extends Migration {
      */
     public function up() {
         //
-        Schema::create('historialReporte', function (Blueprint $table) {
+        Schema::create('historialTicket', function (Blueprint $table) {
             $table->collation = 'utf8_general_ci';
             $table->charset = 'utf8';
             $table->increments('id');
             $table->string('descripcion')->nullable();
-            $table->integer('reporte_id')->unsigned();
+            $table->integer('ticket_id')->unsigned();
             $table->integer('users_id')->unsigned();
             $table->integer('soluciones_id')->unsigned()->nullable();
             //Claves Foreaneas
-            $table->foreign('reporte_id')->references('id')->on('reporte');
+            $table->foreign('ticket_id')->references('id')->on('ticket');
             $table->foreign('users_id')->references('id')->on('users');
             $table->foreign('soluciones_id')->references('id')->on('soluciones')->onDelete('set null');
         });
@@ -34,7 +34,7 @@ class CreateHistorialReport extends Migration {
      */
     public function down() {
         //
-        Schema::drop('historialReporte');
+        Schema::drop('historialTicket');
     }
 
 }

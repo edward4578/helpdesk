@@ -49,12 +49,15 @@
   	Route::resource('solucion','SolucionesController');
   	Route::get('solucion/{id}/destroy', ['uses' => 'SolucionesController@destroy', 'as' => 'solucion.destroy']);
 
+//Crud de Infocentros
+    Route::resource('ticket', 'TicketController');
+    Route::get('ticket/{id}/destroy', ['uses' => 'TicketController@destroy', 'as' => 'ticket.destroy']);
 
 //Estados Municipiio y Parroquias AJAX
-  	Route::get('municipios/{id}', [ 'as' => 'municipios', 'uses' => 'BeneficiarioController@getMunicipios']);
-  	Route::get('parroquias/{id}', [ 'as' => 'parroquias', 'uses' => 'BeneficiarioController@getParroquias']);
+    Route::get('municipios/{id}', [ 'as' => 'municipios', 'uses' => 'BeneficiarioController@getMunicipios']);
+    Route::get('parroquias/{id}', [ 'as' => 'parroquias', 'uses' => 'BeneficiarioController@getParroquias']);
 
 
 
-  	Route::get('getbeneficiarios', 'canaimaController@getBeneficiarios');
+    Route::get('getbeneficiarios', 'canaimaController@getBeneficiarios');
   });

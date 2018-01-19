@@ -14,7 +14,7 @@ class FallasModel extends Model {
 
     public static function fallas() {
 
-        $modelFallas = self::orderBy('id', 'asc')->get();
+        $modelFallas = self::orderBy('id', 'ASC')->get();
         return $modelFallas;
     }
 

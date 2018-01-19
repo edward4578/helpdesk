@@ -17,13 +17,10 @@
             </div>
         </div>
         @endif
-
-
-
         <!-- Sidebar Menu -->
         <ul class="sidebar-menu">
             <li class="header">TICKET</li>
-            <li><a href="#"><i class='fa fa-plus-circle'></i>Generar Ticket</a></li>
+            <li><a href="{{ route('ticket.create') }}"><i class='fa fa-plus-circle'></i>Generar Ticket</a></li>
             <li class="header">ADMINISTRACIÓN</li>
             <li class="treeview">
                 <a href="#"><i class='fa fa-link'></i> Usuarios <i class="fa fa-angle-left pull-right"></i></a>

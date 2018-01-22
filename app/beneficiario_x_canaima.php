@@ -7,14 +7,15 @@ use Illuminate\Support\Facades\DB;
 class beneficiario_x_canaima extends Model {
 
     //    
-    public $timestamps = false;
-    public $table = 'beneficiario_x_canaima';
-    protected $fillable = [
-        'serial_canaima',
-        'descripcion',
-        'beneficiario_id',
-        'canaima_id',
-    ];
+	public $timestamps = false;
+	public $table = 'beneficiario_x_canaima';
+	protected $fillable = [
+		'serial_canaima',
+		'sol_can',
+		'descripcion',
+		'beneficiario_id',
+		'canaima_id',
+	];
 
-    
+	
 }

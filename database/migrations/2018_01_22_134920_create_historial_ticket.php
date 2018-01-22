@@ -3,14 +3,15 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateHistorialTicket extends Migration {
-
+class CreateHistorialTicket extends Migration
+{
     /**
      * Run the migrations.
      *
      * @return void
      */
-    public function up() {
+    public function up()
+    {
         //
         Schema::create('historialTicket', function (Blueprint $table) {
             $table->collation = 'utf8_general_ci';
@@ -32,9 +33,9 @@ class CreateHistorialTicket extends Migration {
      *
      * @return void
      */
-    public function down() {
+    public function down()
+    {
         //
         Schema::drop('historialTicket');
     }
-
 }

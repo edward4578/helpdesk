@@ -53,12 +53,11 @@
                 @{{ errors.first('cedula') }}
               </div>
             </form>
-
-
             <!-- /.formulario -->
           </div>
           <!-- /.box-body -->
         </div> 
+        <br>
         <!-- /.row -->
         <div class="row">
           <div class="col-sm-3">
@@ -92,6 +91,16 @@
           <div class="col-sm-3">
             <label for="parroquia"> Parroquia</label>
             <input class="form-control" type="text" name="parroquia" v-model="parroquia.parroquia" readonly="readonly">
+          </div>
+          <div class="col-md-12">
+        <p>&nbsp;</p>
+          </div>
+          <div class="col-sm-3">
+            <label for="computadoras">Computadoras del usuario</label>
+            <select name="computadoras" class="form-control">
+              <option selected="selected" value="0">Seleccione..</option>
+              <option v-for="item in beneficiario.canaimas" :id="item.id">@{{ item.modelo }} - @{{ item.pivot.serial_canaima }}</option>
+            </select>
           </div>
           <div class="col-md-12">
             <h3>JSON</h3>
@@ -145,18 +154,13 @@ new Vue({
           this.estado = response.data.parroquia.municipio.estado;
           this.municipio = response.data.parroquia.municipio;
           this.parroquia = response.data.parroquia;
-          
+          this.cedula = '';
         }).catch(error => {
           this.error = error.response;
-          
-          swal(this.error.status, '', 'error');
         });
       });
     }
   }
 });
-
-
-
 </script>
 @endsection

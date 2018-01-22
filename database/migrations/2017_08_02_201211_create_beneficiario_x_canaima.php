@@ -17,6 +17,7 @@ class CreateBeneficiarioXCanaima extends Migration {
             $table->charset = 'utf8';
             $table->increments('id');
             $table->string('serial_canaima');
+            $table->boolean('sol_can');
             $table->text('descripcion');
             $table->integer('beneficiario_id')->unsigned();
             $table->integer('canaima_id')->unsigned();

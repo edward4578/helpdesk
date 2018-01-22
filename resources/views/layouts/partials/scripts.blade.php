@@ -10,3 +10,15 @@
 <script src="{{ asset('/plugins/datatables/jquery.dataTables.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('/plugins/datatables/dataTables.bootstrap.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('/js/sweetalert.min.js') }}" type="text/javascript"> </script>
+
+<script src="{{ asset('/js/select2.full.min.js') }}" type="text/javascript"> </script>
+
+<script src="{{ asset('/js/vue.js') }}" type="text/javascript"> </script>
+
+<script src="{{ asset('js/vee-validate.js') }}" type="text/javascript"></script>
+
+<script src="{{ asset('js/vee-validate-es.js') }}" type="text/javascript"></script>
+
+<script src="{{ asset('/js/axios.js') }}" type="text/javascript"> </script>
+
+

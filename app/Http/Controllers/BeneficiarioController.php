@@ -88,8 +88,8 @@ class BeneficiarioController extends Controller {
         $validator = Validator::make($request->all(), $this->rulesCreated, $this->rulesMessages);
         if ($validator->fails()) {
             return redirect('beneficiario/create')
-                            ->withErrors($validator)
-                            ->withInput();
+            ->withErrors($validator)
+            ->withInput();
         }
         $beneficiario = new BenefiriarioModel();
         $beneficiario->cedula = $request->get('cedula');
@@ -113,7 +113,14 @@ class BeneficiarioController extends Controller {
      */
     public function show($id) {
         //
+     try {
+        $beneficiario = BenefiriarioModel::getIdBeneficiario($id);
+        dd($beneficiario);
+
+    } catch (Exception $e) {
+        return $e;
     }
+}
 
     /**
      * Show the form for editing the specified resource.
@@ -141,8 +148,8 @@ class BeneficiarioController extends Controller {
         $validator = Validator::make($request->all(), $this->rulesUpdate, $this->rulesMessages);
         if ($validator->fails()) {
             return redirect('beneficiario/' . $id . '/edit')
-                            ->withErrors($validator)
-                            ->withInput();
+            ->withErrors($validator)
+            ->withInput();
         }
         $beneficiario = BenefiriarioModel::find($id);
         if (is_null($beneficiario)) {
@@ -190,4 +197,10 @@ class BeneficiarioController extends Controller {
         }
     }
 
+    public function getCedulaBeneficiario($cedula) {
+
+    
+       $beneficiario = BenefiriarioModel::getCedulaBeneficiario($cedula);
+        return $beneficiario;
+}
 }

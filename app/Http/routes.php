@@ -57,7 +57,5 @@
     Route::get('municipios/{id}', [ 'as' => 'municipios', 'uses' => 'BeneficiarioController@getMunicipios']);
     Route::get('parroquias/{id}', [ 'as' => 'parroquias', 'uses' => 'BeneficiarioController@getParroquias']);
 
-
-
-    Route::get('getbeneficiarios', 'canaimaController@getBeneficiarios');
+    Route::get('getCedulaBeneficiario/{cedula}', 'BeneficiarioController@getCedulaBeneficiario');
   });

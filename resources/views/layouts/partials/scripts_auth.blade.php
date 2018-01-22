@@ -4,7 +4,12 @@
 <script src="{{ asset('/js/bootstrap.min.js') }}" type="text/javascript"></script>
 <!-- iCheck -->
 <script src="{{ asset('/plugins/iCheck/icheck.min.js') }}" type="text/javascript"></script>
-
 <script src="{{ asset('/js/sweetalert.min.js') }}" type="text/javascript"> </script>
+
+<script src="{{ asset('/js/select2.full.min.js') }}" type="text/javascript"> </script>
+
+<script src="{{ asset('/js/vue.js') }}" type="text/javascript"> </script>
+
+<script src="{{ asset('/js/axios.js') }}" type="text/javascript"> </script>
 
 

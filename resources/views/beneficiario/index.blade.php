@@ -25,6 +25,7 @@
                 <thead>
                     <tr>
                         <th>ID</th>
+                        <th>Cedula</th>
                         <th>Nombres</th>
                         <th>Apellido</th>
                         <th>Telefono</th>
@@ -35,6 +36,7 @@
                 <tbody>         
                     @foreach($beneficiarios as $item)
                 <td>{!!$item->id!!}</td>
+                <td>{!!$item->cedula!!}</td>
                 <td>{!!$item->nombres!!}</td>
                 <td>{!!$item->apellidos!!}</td>   
                 <td>{!!$item->telefono!!}</td>

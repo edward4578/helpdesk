@@ -8,6 +8,8 @@ use App\EstadoModel;
 use App\MunicipioModel;
 use App\ParroquiaModel;
 use App\BenefiriarioModel;
+use App\beneficiario_x_canaima;
+use App\CanaimaModel;
 use Laracasts\Flash\Flash;
 use Illuminate\Support\Facades\Auth;
 use Yajra\Datatables\Facades\Datatables;
@@ -73,8 +75,9 @@ class BeneficiarioController extends Controller {
      */
     public function create() {
         //
+        $canaimas = CanaimaModel::all();
         $estados = EstadoModel::all();
-        return view('beneficiario.create')->with('estados', $estados);
+        return view('beneficiario.create')->with('estados', $estados)->with('canaimas', $canaimas);
     }
 
     /**
@@ -99,7 +102,20 @@ class BeneficiarioController extends Controller {
         $beneficiario->telefono = $request->get('telefono');
         $beneficiario->direccion = $request->get('direccion');
         $beneficiario->parroquia_id = $request->get('parroquia_id');
-        $beneficiario->save();
+        if ($beneficiario->save()){
+            $id = $beneficiario->id;
+            foreach ($request->modelo as $key => $v) {
+                
+                $data = array('serial_canaima' => $request->serial [$key],
+                               'sol_can'       => $v,
+                               'descripcion' => $request->descripcion [$key],
+                               'beneficiario_id' => $id,
+                               'canaima_id' =>$v);
+
+            beneficiario_x_canaima::insert($data);
+            }
+
+        }
         //Flash::success('Se ha Registrado el Beneficiario Correctamente');
         notify()->flash('Se ha Registrado el Beneficiario Correctamente', 'success');
         return redirect()->route('beneficiario.index');

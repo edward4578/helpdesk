@@ -13,11 +13,11 @@ class create_beneficiario_seeder extends Seeder {
         //
         try {
             DB::table('beneficiario')->insert([
-                'cedula' => '14748547',
+                'cedula' => 'V-14748547',
                 'nombres' => 'Pepito',
-                'apellidos' => '¨Pregunton',
+                'apellidos' => 'Pregunton',
                 'email' => 'pepitopregunton@gmail.com',
-                'telefono' => '02128477447',
+                'telefono' => '0212-8477447',
                 'direccion' => 'La Palomera',
                 'parroquia_id' => 617,
             ]);

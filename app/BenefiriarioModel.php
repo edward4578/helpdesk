@@ -34,6 +34,17 @@ class BenefiriarioModel extends Model {
         ->withPivot(array('serial_canaima', 'descripcion'));
     }
 
+    public static function getIdBeneficiario($id) {
+
+        $beneficiarioModel = self::where('id','=', $id)->first();
+        if (!$beneficiarioModel) {
+            return response()->json(['error' => 'la Cedula no exite'], 404);
+        }
+        $beneficiarioModel->parroquia->municipio->estado;
+        $beneficiarioModel->canaimas;
+        return $beneficiarioModel;
+    }
+
     public static function getCedulaBeneficiario($cedula){
 
         $beneficiarioModel = self::where('cedula','=',$cedula)->first();

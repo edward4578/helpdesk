@@ -19,6 +19,10 @@
 
 <script src="{{ asset('js/vee-validate-es.js') }}" type="text/javascript"></script>
 
+<script src="{{ asset('js/jquery.validate.min.js') }}" type="text/javascript"></script>
+
+<script src="{{ asset('js/messages_es.js') }}" type="text/javascript"></script>
+
 <script src="{{ asset('/js/axios.js') }}" type="text/javascript"> </script>
 
 

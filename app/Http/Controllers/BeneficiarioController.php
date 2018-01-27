@@ -105,14 +105,14 @@ class BeneficiarioController extends Controller {
         if ($beneficiario->save()){
             $id = $beneficiario->id;
             foreach ($request->modelo as $key => $v) {
-                
-                $data = array('serial_canaima' => $request->serial [$key],
-                               'sol_can'       => $v,
-                               'descripcion' => $request->descripcion [$key],
-                               'beneficiario_id' => $id,
-                               'canaima_id' =>$v);
 
-            beneficiario_x_canaima::insert($data);
+                $data = array('serial_canaima' => $request->serial [$key],
+                 'sol_can'       => $request->robada,
+                 'descripcion' => $request->descripcion [$key],
+                 'beneficiario_id' => $id,
+                 'canaima_id' =>$v);
+
+                beneficiario_x_canaima::insert($data);
             }
 
         }
@@ -129,9 +129,9 @@ class BeneficiarioController extends Controller {
      */
     public function show($id) {
         //
-     try {
+       try {
         $beneficiario = BenefiriarioModel::getIdBeneficiario($id);
-        dd($beneficiario);
+        //dd($beneficiario);
 
     } catch (Exception $e) {
         return $e;
@@ -146,11 +146,11 @@ class BeneficiarioController extends Controller {
      */
     public function edit($id) {
         //
-        $beneficiario = BenefiriarioModel::find($id);
-        $estados = EstadoModel::all(); 
-//dd($beneficiario->parroquia->municipio->estado);
-        
-        return View('beneficiario.edit')->with('beneficiario', $beneficiario)->with('estados', $estados);
+        $beneficiario = BenefiriarioModel::getIdBeneficiario($id);
+        $estados = EstadoModel::all();
+        $canaimass = CanaimaModel::all(); 
+        return View('beneficiario.edit')->with('beneficiario', $beneficiario)->with('estados', $estados)->with('canaimass', $canaimass);
+
     }
 
     /**
@@ -161,6 +161,9 @@ class BeneficiarioController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id) {
+
+//dd($request->get('canaimas'));
+
         $validator = Validator::make($request->all(), $this->rulesUpdate, $this->rulesMessages);
         if ($validator->fails()) {
             return redirect('beneficiario/' . $id . '/edit')
@@ -177,7 +180,11 @@ class BeneficiarioController extends Controller {
         $beneficiario->telefono = $request->get('telefono');
         $beneficiario->direccion = $request->get('direccion');
         $beneficiario->parroquia_id = $request->get('parroquia_id');
-        $beneficiario->save();
+        if ($beneficiario->save()){
+            $beneficiario->canaimas()->sync($request->get('canaimas'));
+        }
+
+
         //Flash::success('Se ha Registrado el Beneficiario Correctamente');
         notify()->flash('El Beneficiario  se ha actualizado correctamente', 'success');
         return redirect()->route('beneficiario.index');
@@ -215,8 +222,8 @@ class BeneficiarioController extends Controller {
 
     public function getCedulaBeneficiario($cedula) {
 
-    
-       $beneficiario = BenefiriarioModel::getCedulaBeneficiario($cedula);
-        return $beneficiario;
-}
+
+     $beneficiario = BenefiriarioModel::getCedulaBeneficiario($cedula);
+     return $beneficiario;
+ }
 }

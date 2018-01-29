@@ -11,7 +11,8 @@
         "laravelcollective/html": "5.2.*",
         "laracasts/flash": "^2.0",
         "yajra/laravel-datatables-oracle": "~6.0",
-        "codecourse/notify": "^1.1"
+        "codecourse/notify": "^1.1",
+        "nesbot/carbon": "^1.22"
 
     },
     "require-dev": {

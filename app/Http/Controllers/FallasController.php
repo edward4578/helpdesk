@@ -101,4 +101,10 @@ class FallasController extends Controller {
         }
     }
 
+    public function getFallas(){
+
+      $fallas = FallasModel::fallas();
+      return $fallas;
+    }
+
 }

@@ -44,6 +44,7 @@
 //Crud de Fallas 
   	Route::resource('falla','FallasController');
   	Route::get('falla/{id}/destroy', ['uses' => 'FallasController@destroy', 'as' => 'falla.destroy']);
+    Route::get('getFallas', 'FallasController@getFallas');
 
 //Crud de Soluciones 
   	Route::resource('solucion','SolucionesController');

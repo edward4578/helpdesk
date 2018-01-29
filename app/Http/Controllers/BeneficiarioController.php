@@ -13,7 +13,7 @@ use App\CanaimaModel;
 use Laracasts\Flash\Flash;
 use Illuminate\Support\Facades\Auth;
 use Yajra\Datatables\Facades\Datatables;
-use Validator;
+
 
 class BeneficiarioController extends Controller {
 

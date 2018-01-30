@@ -31,7 +31,7 @@ class BenefiriarioModel extends Model {
 
     public function canaimas() {
         return $this->belongsToMany('App\CanaimaModel', 'beneficiario_x_canaima', 'beneficiario_id', 'canaima_id')
-        ->withPivot(array('serial_canaima', 'descripcion'));
+        ->withPivot('id','serial_canaima', 'descripcion');
     }
 
     public static function getIdBeneficiario($id) {

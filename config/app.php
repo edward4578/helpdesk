@@ -143,6 +143,7 @@ return [
         Acacha\AdminLTETemplateLaravel\Providers\AdminLTETemplateServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
         Laracasts\Flash\FlashServiceProvider::class,
+        ConsoleTVs\Charts\ChartsServiceProvider::class,
     /*
      * Acacha Llum Service Providers...
      *
@@ -197,6 +198,7 @@ return [
         'Html' => Collective\Html\HtmlFacade::class,
         'Datatables' => Yajra\Datatables\Facades\Datatables::class,
         'Notify' => Codecourse\Notify\Facades\Notify::class,
+        'Charts' => ConsoleTVs\Charts\Facades\Charts::class,
     /*
      * Acacha Llum Aliases...
      *

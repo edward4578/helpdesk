@@ -131,7 +131,7 @@
             <label for="computadoras">Computadoras del usuario</label>
             <select name="beneficiario_x_canaima_id" class="form-control">
               <option selected="selected" value="0">Seleccione..</option>
-              <option v-for="item in beneficiario.canaimas" v-bind:value="item.id">@{{ item.modelo }} - @{{ item.pivot.serial_canaima }}</option>
+              <option v-for="item in beneficiario.canaimas" v-bind:value="item.pivot.id">@{{ item.modelo }} - @{{ item.pivot.serial_canaima }}</option>
             </select>
           </div>
 
@@ -161,6 +161,12 @@
         <div class="col-sm-4">
           <a class="btn btn-primary btn-block btn-flat" href="{{ route('ticket.index') }}" role="button"><span class="fa fa-chevron-left" aria-hidden="true"> Regresar</span></a>
         </div>
+      </div>
+      <div class="col-md-12">
+        <h3>JSON</h3>
+        <pre>
+          @{{ $data }}
+        </pre>
       </div>
       <!-- box-footer -->
     </form>

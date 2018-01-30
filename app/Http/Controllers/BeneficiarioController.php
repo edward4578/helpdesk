@@ -13,7 +13,7 @@ use App\CanaimaModel;
 use Laracasts\Flash\Flash;
 use Illuminate\Support\Facades\Auth;
 use Yajra\Datatables\Facades\Datatables;
-
+use Validator;
 
 class BeneficiarioController extends Controller {
 
@@ -132,6 +132,7 @@ class BeneficiarioController extends Controller {
        try {
         $beneficiario = BenefiriarioModel::getIdBeneficiario($id);
         //dd($beneficiario);
+        return $beneficiario;
 
     } catch (Exception $e) {
         return $e;

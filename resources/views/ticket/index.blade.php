@@ -4,9 +4,9 @@
 <h1>Crear Ticket</h1>
 @endsection
 @section('localizacion')
-<li><a href="#">Inicio</a></li>
+<li><a href="">Inicio</a></li>
 <li><a href="#">Ticket</a></li>
-<li class="active">Historial de Tickets</li>
+<li class="active">Historial de Tickets Pendientes</li>
 @endsection
 @section('main-content')
 
@@ -36,9 +36,8 @@
 					<td>{!!$item->fecha!!}</td>
 					<td><span class="label label-warning">{!!$item->estatus!!}</span></td>
 					<td>{!!$item->falla !!}</td> 
-					<td>{!!\Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $item->fecha)->diffForHumans()     !!}</td> 
+					<td>{!!\Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $item->fecha)->addSeconds(5)->diffForHumans()!!}</td> 
 					<td><a class="btn btn-primary btn-xs"  href="{{ route('ticket.edit', $item->id) }}" role="button"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
-						<a class="btn btn-danger btn-xs" href="{{ route('ticket.destroy', $item->id) }}" role="button"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></a>
 						<a class="btn btn-info btn-xs" href="{{ route('ticket.edit', $item->id) }}" role="button"><span class="fa fa-unlock" aria-hidden="true"></span> Procesar</a>
 					</td> 
 
@@ -53,21 +52,16 @@
 
 
 
+@endsection
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+@section('scripts')
+@if (notify()->ready())
+    <script>
+        swal({
+            title: "{!! notify()->message() !!}",
+            text: "{!! notify()->option('text') !!}",
+            type: "{{ notify()->type() }}",
+        });
+    </script>
+@endif
 @endsection

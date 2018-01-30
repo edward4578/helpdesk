@@ -12,7 +12,8 @@
         "laracasts/flash": "^2.0",
         "yajra/laravel-datatables-oracle": "~6.0",
         "codecourse/notify": "^1.1",
-        "nesbot/carbon": "^1.22"
+        "nesbot/carbon": "^1.22",
+        "consoletvs/charts": "5.*"
 
     },
     "require-dev": {

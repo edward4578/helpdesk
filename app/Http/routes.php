@@ -47,12 +47,23 @@
     Route::get('getFallas', 'FallasController@getFallas');
 
 //Crud de Soluciones 
-  	Route::resource('solucion','SolucionesController');
-  	Route::get('solucion/{id}/destroy', ['uses' => 'SolucionesController@destroy', 'as' => 'solucion.destroy']);
+    Route::resource('solucion','SolucionesController');
+    Route::get('solucion/{id}/destroy', ['uses' => 'SolucionesController@destroy', 'as' => 'solucion.destroy']);
+  //soluciones
+    Route::get('getSoluciones', 'SolucionesController@getSoluciones');
 
 //Crud de Infocentros
     Route::resource('ticket', 'TicketController');
     Route::get('ticket/{id}/destroy', ['uses' => 'TicketController@destroy', 'as' => 'ticket.destroy']);
+
+//Reportes de Estados de Ticket
+    //ticket generados mensuales
+    Route::get('reportes/mensual','ReporteController@mensuales');
+    //ticket generados Pendientes
+    Route::get('reportes/pendientes','ReporteController@pendientes');    
+    //ticket generados por Procesar
+    Route::get('reportes/porProcesar','ReporteController@porProcesar');
+
 
 //Estados Municipiio y Parroquias AJAX
     Route::get('municipios/{id}', [ 'as' => 'municipios', 'uses' => 'BeneficiarioController@getMunicipios']);

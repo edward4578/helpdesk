@@ -13,7 +13,7 @@ class SolucionesModel extends Model {
     ];
     public $timestamps = false;
 
-    public static function soluciones() {
+    public static function getSoluciones() {
         $modelSolucion = self::orderBy('id', 'asc')->get();
         return $modelSolucion;
     }

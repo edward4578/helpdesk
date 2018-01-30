@@ -15,4 +15,6 @@ class HistorialTicketModel extends Model
 		'soluciones_id',
 	];
 	public $timestamps = false;
+
+
 }

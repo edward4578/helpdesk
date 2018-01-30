@@ -6,13 +6,15 @@ use Illuminate\Http\Request;
 use App\FallasModel;
 use App\TicketModel;
 use App\HistorialTicketModel;
+use App\SolucionesModel;
+use App\EstatusModel;
 use App\Http\Requests;
 use Carbon\Carbon;
 use Validator;
 
 class TicketController extends Controller
 {
-        public function __construct() {
+    public function __construct() {
         Carbon::setLocale('es');
     }
     /**
@@ -28,10 +30,9 @@ class TicketController extends Controller
         'estatus_id' => 'required|exists:estatus,id',
     );
     private $rulesUpdate = array(
-        'falla'=> 'required',
-        'falla_id'=> 'required',
+        'solucion'=> 'required',
+        'solucion_id'=> 'required',
         'users_id' => 'required|exists:users,id',
-        'beneficiario_x_canaima_id' => 'required|not_in:0|exists:beneficiario_x_canaima,id',
         'estatus_id' => 'required|exists:estatus,id',
     );
     private $rulesMessages = array(
@@ -39,14 +40,13 @@ class TicketController extends Controller
         'falla_id.required' => 'tiene que seleccionar un tipo de falla',
         'users_id.not_in' => 'error en asignar a usuario',
         'beneficiario_x_canaima_id.not_in' => 'Debe Seleccionar una computadora',
-        'estatus_id.required' => 'es estatus no exite',
+        'estatus_id.required' => 'El estatus no exite',
     );
 
     public function index()
     {
         //Vista de Ticket Pendientes status == 1
         $tickets = ticketModel::ticketAll(1);
-        //dd($tickets);
         return view('ticket.index')->with('tickets', $tickets);
     }
 
@@ -116,6 +116,19 @@ class TicketController extends Controller
     public function edit($id)
     {
         //
+        try {
+
+            $ticket = TicketModel::ticketIdFirt($id);
+            $soluciones = SolucionesModel::all();
+            $estatus = EstatusModel::all();
+            //dd($ticket);
+            return view('ticket.edit')->with(array('ticket' => $ticket, 'soluciones'=> 
+                $soluciones, 'estatus' => $estatus));
+
+        } catch (Exception $e) {
+            return $e;
+        }
+
     }
 
     /**
@@ -127,7 +140,24 @@ class TicketController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+        $validator = Validator::make($request->all(), $this->rulesUpdate, $this->rulesMessages);
+        if ($validator->fails()) {
+            return redirect('ticket/' . $id . '/edit')
+            ->withErrors($validator)
+            ->withInput();
+        }
+        $ticket = TicketModel::find($id);
+        $ticket->estatus_id = $request->estatus_id;
+        $ticket->save();
+        $historialTicket = HistorialTicketModel::where('ticket_id','=', $id)->first();
+        $historialTicket->soluciones_id = $request->solucion_id;
+        $historialTicket->descripcion = $request->descripcion;
+        $historialTicket->save();
+
+        notify()->flash('Se ha Cerrado el Ticket Correctamente', 'success');
+        return redirect()->route('ticket.index');
+
     }
 
     /**

@@ -44,8 +44,8 @@ class SolucionesController extends Controller {
         $validator = Validator::make($request->all(), $this->rulesCreated, $this->rulesMessages);
         if ($validator->fails()) {
             return redirect('solucion/create')
-                            ->withErrors($validator)
-                            ->withInput();
+            ->withErrors($validator)
+            ->withInput();
         }
         $solucion = new SolucionesModel();
         $solucion->solucion = $request->get('solucion');
@@ -69,8 +69,8 @@ class SolucionesController extends Controller {
         $validator = Validator::make($request->all(), $this->rulesUpdate, $this->rulesMessages);
         if ($validator->fails()) {
             return redirect('solucion/' . $id . '/edit')
-                            ->withErrors($validator)
-                            ->withInput();
+            ->withErrors($validator)
+            ->withInput();
         }
         $solucion = SolucionesModel::find($id);
         if (is_null($solucion)) {
@@ -100,5 +100,9 @@ class SolucionesController extends Controller {
             }
         }
     }
+    public function getSoluciones() {
 
+        $soluciones = SolucionesModel::getSoluciones();
+        return $soluciones;
+    }
 }

@@ -73,7 +73,7 @@
                 </ul>
             </li>
             <li class="header">REPORTES</li>
-            <li><a href="#"><i class='fa fa-area-chart'></i> Ticket Generados Mensuales</a></li>
+            <li><a href="{{ url('reportes/mensual') }}"><i class='fa fa-area-chart'></i> Ticket Generados Mensuales</a></li>
             <li><a href="#"><i class='fa fa-area-chart'></i> Ticket Cerrados</a></li>
             <li><a href="#"><i class='fa fa-area-chart'></i> Ticket por Procesar</a></li>
         </ul><!-- /.sidebar-menu -->

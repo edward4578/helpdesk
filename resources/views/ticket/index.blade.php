@@ -37,7 +37,7 @@
 					<td><span class="label label-warning">{!!$item->estatus!!}</span></td>
 					<td>{!!$item->falla !!}</td> 
 					<td>{!!\Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $item->fecha)->addSeconds(5)->diffForHumans()!!}</td> 
-					<td><a class="btn btn-primary btn-xs"  href="{{ route('ticket.edit', $item->id) }}" role="button"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+					<td>
 						<a class="btn btn-info btn-xs" href="{{ route('ticket.edit', $item->id) }}" role="button"><span class="fa fa-unlock" aria-hidden="true"></span> Procesar</a>
 					</td> 
 

@@ -31,7 +31,7 @@ class SolucionesController extends Controller {
 
     public function index() {
         //todos los Infocentros
-        $soluciones = SolucionesModel::soluciones();
+        $soluciones = SolucionesModel::getSoluciones();
         return view('solucion.index')->with('soluciones', $soluciones);
     }
 

@@ -53,6 +53,55 @@ class TicketModel extends Model
 		return $ticketAll;
 	}
 
+	public static function ticketAllUser($estatus, $user){
+
+		$ticketAll = DB::table('ticket')
+		->join('beneficiario_x_canaima', 'ticket.beneficiario_x_canaima_id', '=', 'beneficiario_x_canaima.id')
+		->join('beneficiario', 'beneficiario_x_canaima.beneficiario_id', '=', 'beneficiario.id')
+		->join('users', 'ticket.users_id', '=', 'users.id')
+		->join('estatus', 'ticket.estatus_id', '=', 'estatus.id')
+		->join('fallas', 'ticket.falla_id', '=', 'fallas.id')
+		->select('ticket.id',
+			'ticket.fecha', 
+			'estatus.estatus', 
+			'fallas.falla',
+			'beneficiario.nombres',
+			'beneficiario.apellidos')
+		->where('estatus.id', $estatus)
+		->where('ticket.users_id', $user)
+		->get();
+
+		return $ticketAll;
+	}
+
+	public static function ticketCerradosUsuario($estatus, $user){
+
+		$ticketAll = DB::table('ticket')
+		->join('beneficiario_x_canaima', 'ticket.beneficiario_x_canaima_id', '=', 'beneficiario_x_canaima.id')
+		->join('Historialticket', 'ticket.id', '=', 'Historialticket.ticket_id')
+		->join('soluciones', 'Historialticket.soluciones_id', '=', 'soluciones.id')
+		->join('beneficiario', 'beneficiario_x_canaima.beneficiario_id', '=', 'beneficiario.id')
+		->join('users', 'ticket.users_id', '=', 'users.id')
+		->join('estatus', 'ticket.estatus_id', '=', 'estatus.id')
+		->join('fallas', 'ticket.falla_id', '=', 'fallas.id')
+		->select('ticket.id',
+			'ticket.fecha', 
+			'estatus.estatus', 
+			'fallas.falla',
+			'beneficiario.nombres',
+			'beneficiario.apellidos',
+			'soluciones.solucion',
+			'Historialticket.descripcion',
+			'Historialticket.created_at',
+			'Historialticket.updated_at'
+		)
+		->where('estatus.id', $estatus)
+		->where('ticket.users_id', $user)
+		->get();
+
+		return $ticketAll;
+	}
+
 	public static function ticketIdFirt($id){
 
 		$ticketAll = DB::table('ticket')

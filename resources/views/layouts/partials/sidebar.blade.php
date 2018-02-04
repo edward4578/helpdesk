@@ -19,8 +19,12 @@
         @endif
         <!-- Sidebar Menu -->
         <ul class="sidebar-menu">
+            <li class="header">Principal</li>
+            <li class="treeview">
+                <a href="{{ url('home') }}"><i class='fa fa-home'></i> Inicio</a>
+            </li>
             <li class="header">Gestion De Incidencias</li>
-                        <li class="treeview">
+            <li class="treeview">
                 <a href="#"><i class='fa fa-link'></i> Ticket <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
                     <li><a href="{{ route('ticket.create') }}"><i class='fa fa-plus-circle'></i> Crear Ticket</a></li>
@@ -40,7 +44,6 @@
                 <a href="#"><i class='fa fa-link'></i> Beneficiarios <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
                     <li><a href="{{ route('beneficiario.create') }}"><i class='fa fa-plus-circle'></i> Crear Beneficiario</a></li>
-                    <li><a href="#"><i class='fa fa-edit'></i> Modificar Beneficiario</a></li>
                     <li><a href="{{ route('beneficiario.index') }}"><i class='fa fa-reorder'></i> Lista de Beneficiarios</a></li>
                 </ul>
             </li>
@@ -72,8 +75,8 @@
                     <li><a href="{{ route('solucion.index') }}"><i class='fa fa-reorder'></i> Lista de Solución</a></li>
                 </ul>
             </li>
-            <li class="header">REPORTES</li>
-            <li><a href="{{ url('reportes/mensual') }}"><i class='fa fa-area-chart'></i> Ticket Generados Mensuales</a></li>
+            <li class="header"><i class="fa fa-area-chart"></i>Graficos</li>
+            <li><a href="{{ url('reportes/mensual') }}"><i class='fa fa-area-chart'></i> Ticket Generados</a></li>
             <li><a href="#"><i class='fa fa-area-chart'></i> Ticket Cerrados</a></li>
             <li><a href="#"><i class='fa fa-area-chart'></i> Ticket por Procesar</a></li>
         </ul><!-- /.sidebar-menu -->

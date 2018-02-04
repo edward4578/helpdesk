@@ -3,11 +3,13 @@
 @section('contentheader_title')
 <h1>Crear Ticket</h1>
 @endsection
+
 @section('localizacion')
 <li><a href="#">Inicio</a></li>
 <li><a href="#">Ticket</a></li>
 <li class="active">Crear Ticket</li>
 @endsection
+
 @section('main-content')
 <!-- /.ERROREES -->
 <div class="row">

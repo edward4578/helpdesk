@@ -65,7 +65,8 @@
      </div>
      <div class="col-sm-6">
       <label for="descripcion"> Descripción</label>
-      <textarea readonly="readonly" class="form-control"   name="descripcion">{{ $ticket->descripcion }}</textarea>
+      <textarea readonly="readonly" class="form-control" name="descripcion">
+        {{ $ticket->descripcion }}</textarea>
     </div>
 
     <div class="col-md-12">
@@ -75,7 +76,6 @@
     <div class="col-sm-3">
       <label for="estatus">estatus</label>
       <select name="estatus_id" class="form-control">
-        <option selected="selected" value="{{ $ticket->estatus_id }}">{{ $ticket->estatus }} </option>
           @foreach($estatus as $item)
           <option value="{!!$item->id!!}">{!!$item->estatus!!}</option>
           @endforeach
@@ -107,12 +107,6 @@
     <div class="col-sm-4">
       <a class="btn btn-primary btn-block btn-flat" href="{{ route('ticket.index') }}" role="button"><span class="fa fa-chevron-left" aria-hidden="true"> Regresar</span></a>
     </div>
-  </div>
-  <div class="col-md-12">
-    <h3>JSON</h3>
-    <pre>
-      @{{ $data }}
-    </pre>
   </div>
   <!-- box-footer -->
 {!! Form::close() !!}

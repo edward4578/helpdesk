@@ -144,6 +144,7 @@ return [
         Collective\Html\HtmlServiceProvider::class,
         Laracasts\Flash\FlashServiceProvider::class,
         ConsoleTVs\Charts\ChartsServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
     /*
      * Acacha Llum Service Providers...
      *
@@ -199,6 +200,7 @@ return [
         'Datatables' => Yajra\Datatables\Facades\Datatables::class,
         'Notify' => Codecourse\Notify\Facades\Notify::class,
         'Charts' => ConsoleTVs\Charts\Facades\Charts::class,
+        'PDF' => Barryvdh\DomPDF\Facade::class,
     /*
      * Acacha Llum Aliases...
      *

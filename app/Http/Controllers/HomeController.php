@@ -9,7 +9,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests;
 use Illuminate\Http\Request;
-
+use App\TicketModel;
+use Carbon\Carbon;
 /**
  * Class HomeController
  * @package App\Http\Controllers
@@ -23,7 +24,9 @@ class HomeController extends Controller
      */
     public function __construct()
     {
+        Carbon::setLocale('es');
         $this->middleware('auth');
+
     }
 
     /**
@@ -31,8 +34,17 @@ class HomeController extends Controller
      *
      * @return Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('home');
-    }
+
+     $userId = $request->user()->id;
+     // Ticket Pendientes del Usuario == 1
+     $ticket = TicketModel::ticketAllUser(1, $userId);
+    // Ticket Processados del Usuario == 2
+     $ticketP = TicketModel::ticketCerradosUsuario(2, $userId);
+    // Ticket Rechazados del Usuario == 3
+     $ticketR = TicketModel::ticketCerradosUsuario(3, $userId);
+
+     return view('home')->with('ticket', $ticket)->with('ticketP', $ticketP)->with('ticketR', $ticketR);;
+ }
 }

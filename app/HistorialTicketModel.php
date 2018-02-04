@@ -14,7 +14,7 @@ class HistorialTicketModel extends Model
 		'users_id',
 		'soluciones_id',
 	];
-	public $timestamps = false;
+	public $timestamps = true;
 
 
 }

@@ -52,16 +52,25 @@
   //soluciones
     Route::get('getSoluciones', 'SolucionesController@getSoluciones');
 
-//Crud de Infocentros
+//Crud de Ticket
     Route::resource('ticket', 'TicketController');
     Route::get('ticket/{id}/destroy', ['uses' => 'TicketController@destroy', 'as' => 'ticket.destroy']);
+    
+    //pendientes por Usuario
+    Route::get('tickets/pendientes', 'TicketController@getUserticketPentiente');
 
-//Reportes de Estados de Ticket
-    //ticket generados mensuales
+        //Cerrados por Usuario
+    Route::get('tickets/procesados', 'TicketController@getUserticketCerrados');
+
+        //Rechazados por Usuario
+    Route::get('tickets/rechazados', 'TicketController@getUserticketRechazados');
+
+  //Reportes de Estados de Ticket
+      //ticket generados mensuales
     Route::get('reportes/mensual','ReporteController@mensuales');
-    //ticket generados Pendientes
+      //ticket generados Pendientes
     Route::get('reportes/pendientes','ReporteController@pendientes');    
-    //ticket generados por Procesar
+      //ticket generados por Procesar
     Route::get('reportes/porProcesar','ReporteController@porProcesar');
 
 

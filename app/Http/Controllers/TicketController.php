@@ -16,6 +16,7 @@ class TicketController extends Controller
 {
     public function __construct() {
         Carbon::setLocale('es');
+
     }
     /**
      * Display a listing of the resource.
@@ -43,10 +44,11 @@ class TicketController extends Controller
         'estatus_id.required' => 'El estatus no exite',
     );
 
-    public function index()
+    public function index(Request $request)
     {
-        //Vista de Ticket Pendientes status == 1
-        $tickets = ticketModel::ticketAll(1);
+        //Vista de Ticket Pendientes status == 1 Usuario Logeado
+        $userId = $request->user()->id;
+        $tickets = TicketModel::ticketAllUser(1, $userId);
         return view('ticket.index')->with('tickets', $tickets);
     }
 
@@ -159,7 +161,6 @@ class TicketController extends Controller
         return redirect()->route('ticket.index');
 
     }
-
     /**
      * Remove the specified resource from storage.
      *
@@ -170,4 +171,29 @@ class TicketController extends Controller
     {
         //
     }
+
+
+    public function getUserticketPentiente(Request $request){
+     $userId = $request->user()->id;
+    // Ticket Pendientes del Usuario == 1
+     $ticket = TicketModel::ticketAllUser(1, $userId);
+
+     return view('ticket.pendiente')->with('ticket', $ticket);
+
+ }
+ public function getUserticketCerrados(Request $request){
+
+     $userId = $request->user()->id;
+         // Ticket Processados del Usuario == 2
+     $ticketP = TicketModel::ticketCerradosUsuario(2, $userId);
+     return view('ticket.procesados')->with('ticketP', $ticketP);
+
+ }
+ public function getUserticketRechazados(Request $request){
+     $userId = $request->user()->id;
+         // Ticket Rechazados del Usuario == 3
+     $ticketR = TicketModel::ticketCerradosUsuario(3, $userId);
+     return view('ticket.rechazados')->with('ticketR', $ticketR);
+
+ }
 }

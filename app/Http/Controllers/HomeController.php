@@ -45,6 +45,6 @@ class HomeController extends Controller
     // Ticket Rechazados del Usuario == 3
      $ticketR = TicketModel::ticketCerradosUsuario(3, $userId);
 
-     return view('home')->with('ticket', $ticket)->with('ticketP', $ticketP)->with('ticketR', $ticketR);;
+     return view('home')->with('ticket', $ticket)->with('ticketP', $ticketP)->with('ticketR', $ticketR);
  }
 }

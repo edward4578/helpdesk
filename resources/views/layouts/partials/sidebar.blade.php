@@ -28,8 +28,10 @@
                 <a href="#"><i class='fa fa-link'></i> Ticket <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
                     <li><a href="{{ route('ticket.create') }}"><i class='fa fa-plus-circle'></i> Crear Ticket</a></li>
-                    <li><a href="#"><i class='fa fa-reorder'></i> Mis Tickets Asignados</a></li>
-                    <li><a href="{{ route('ticket.index') }}"><i class='fa fa-reorder'></i> Ticket Pendientes</a></li>
+                    <li><a href="{{ route('ticket.index') }}"><i class='fa fa-reorder'></i> Mis Ticket Pendientes</a></li>
+                    <li><a href="{{ url('tickets/procesados') }}"><i class='fa fa-reorder'></i> Mis Tickets Procesados</a></li>
+                    <li><a href="{{ url('tickets/rechazados') }}"><i class='fa fa-reorder'></i> Mis Tickets Rechazados</a></li>
+
                 </ul>
             </li>
             <li class="header">ADMINISTRACIÓN</li>

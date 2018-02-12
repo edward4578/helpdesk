@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
 @section('contentheader_title')
-<h1>Crear Ticket</h1>
+<h1>Mis Ticket Pendientes</h1>
 @endsection
 @section('localizacion')
 <li><a href="">Inicio</a></li>
 <li><a href="#">Ticket</a></li>
-<li class="active">Historial de Tickets Pendientes</li>
+<li class="active">Pendientes</li>
 @endsection
 @section('main-content')
 

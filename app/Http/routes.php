@@ -65,6 +65,12 @@
         //Rechazados por Usuario
     Route::get('tickets/rechazados', 'TicketController@getUserticketRechazados');
 
+    //Graficos 
+    Route::get('graficos/mensual','GraficosController@mensuales');
+    
+    
+    
+    
   //Reportes de Estados de Ticket
       //ticket generados mensuales
     Route::get('reportes/mensual','ReporteController@mensuales');

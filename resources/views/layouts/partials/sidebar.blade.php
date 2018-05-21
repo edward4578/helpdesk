@@ -81,7 +81,7 @@
             <li class="treeview">
                 <a href="#"><i class='fa fa-link'></i>Por ticket <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
-                    <li><a href="{{ url('reportes/mensual') }}"><i class='fa fa-area-chart'></i> Ticket Generados</a></li>
+                    <li><a href="{{ url('graficos/general') }}"><i class='fa fa-area-chart'></i> Ticket Generados</a></li>
                     <li><a href="#"><i class='fa fa-area-chart'></i> Ticket Cerrados</a></li>
                     <li><a href="#"><i class='fa fa-area-chart'></i> Ticket por Procesar</a></li>
                 </ul>

@@ -66,7 +66,7 @@
     Route::get('tickets/rechazados', 'TicketController@getUserticketRechazados');
 
     //Graficos 
-    Route::get('graficos/mensual','GraficosController@mensuales');
+    Route::get('graficos/general','GraficosController@ticketGeneradosTodos');
     
     
     

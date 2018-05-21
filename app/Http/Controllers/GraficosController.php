@@ -11,7 +11,7 @@ use Charts;
 class GraficosController extends Controller
 {
     //
-    	public function mensuales()
+    	public function ticketGeneradosTodos()
 	{
 	//Pendientes
 	$pendientes = DB::table('ticket')->where('estatus_id','=',1)->count();
@@ -21,12 +21,12 @@ class GraficosController extends Controller
 	$rechazados = DB::table('ticket')->where('estatus_id','=',3)->count();
 
 		$chart = Charts::create('donut', 'highcharts')
-		->title('Ticket Generados')
+		->title('Total de Ticket Generados')
 		->labels(['Procesados', 'Pendientes', 'Rechazados'])
-		 ->colors(['#42a5f5 ', '#ffca28', '#dd2c00' ])
+		 //->colors(['#42a5f5 ', '#ffca28', '#dd2c00' ])
 		->values([$procesados,$pendientes,$rechazados])
-		->dimensions(1000,500)
+		->dimensions(600,400)
 		->responsive(false);
-		return view('grafico.mensual',['chart'=> $chart]);
+		return view('grafico.general',['chart'=> $chart]);
 	}
 }

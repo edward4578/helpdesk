@@ -68,6 +68,12 @@ class BeneficiarioController extends Controller {
         return view('beneficiario.index')->with('beneficiarios', $beneficiarios);
     }
 
+    public function index2() {
+        //todos los Beneficiarios
+        $beneficiarios = BenefiriarioModel::all();
+        return view('tecnico.beneficiario.index')->with('beneficiarios', $beneficiarios);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -78,6 +84,13 @@ class BeneficiarioController extends Controller {
         $canaimas = CanaimaModel::all();
         $estados = EstadoModel::all();
         return view('beneficiario.create')->with('estados', $estados)->with('canaimas', $canaimas);
+    }
+
+    public function create2() {
+        //
+        $canaimas = CanaimaModel::all();
+        $estados = EstadoModel::all();
+        return view('tecnico.beneficiario.create')->with('estados', $estados)->with('canaimas', $canaimas);
     }
 
     /**
@@ -91,8 +104,8 @@ class BeneficiarioController extends Controller {
         $validator = Validator::make($request->all(), $this->rulesCreated, $this->rulesMessages);
         if ($validator->fails()) {
             return redirect('beneficiario/create')
-            ->withErrors($validator)
-            ->withInput();
+                            ->withErrors($validator)
+                            ->withInput();
         }
         $beneficiario = new BenefiriarioModel();
         $beneficiario->cedula = $request->get('cedula');
@@ -102,23 +115,56 @@ class BeneficiarioController extends Controller {
         $beneficiario->telefono = $request->get('telefono');
         $beneficiario->direccion = $request->get('direccion');
         $beneficiario->parroquia_id = $request->get('parroquia_id');
-        if ($beneficiario->save()){
+        if ($beneficiario->save()) {
             $id = $beneficiario->id;
             foreach ($request->modelo as $key => $v) {
 
                 $data = array('serial_canaima' => $request->serial [$key],
-                 'sol_can'       => $request->robada,
-                 'descripcion' => $request->descripcion [$key],
-                 'beneficiario_id' => $id,
-                 'canaima_id' =>$v);
+                    'sol_can' => $request->robada,
+                    'descripcion' => $request->descripcion [$key],
+                    'beneficiario_id' => $id,
+                    'canaima_id' => $v);
 
                 beneficiario_x_canaima::insert($data);
             }
-
         }
         //Flash::success('Se ha Registrado el Beneficiario Correctamente');
         notify()->flash('Se ha Registrado el Beneficiario Correctamente', 'success');
         return redirect()->route('beneficiario.index');
+    }
+
+    public function store2(Request $request) {
+
+        $validator = Validator::make($request->all(), $this->rulesCreated, $this->rulesMessages);
+        if ($validator->fails()) {
+            return redirect('tecnico/beneficiario/create')
+                            ->withErrors($validator)
+                            ->withInput();
+        }
+        $beneficiario = new BenefiriarioModel();
+        $beneficiario->cedula = $request->get('cedula');
+        $beneficiario->nombres = $request->get('nombres');
+        $beneficiario->apellidos = $request->get('apellidos');
+        $beneficiario->email = $request->get('email');
+        $beneficiario->telefono = $request->get('telefono');
+        $beneficiario->direccion = $request->get('direccion');
+        $beneficiario->parroquia_id = $request->get('parroquia_id');
+        if ($beneficiario->save()) {
+            $id = $beneficiario->id;
+            foreach ($request->modelo as $key => $v) {
+
+                $data = array('serial_canaima' => $request->serial [$key],
+                    'sol_can' => $request->robada,
+                    'descripcion' => $request->descripcion [$key],
+                    'beneficiario_id' => $id,
+                    'canaima_id' => $v);
+
+                beneficiario_x_canaima::insert($data);
+            }
+        }
+        //Flash::success('Se ha Registrado el Beneficiario Correctamente');
+        notify()->flash('Se ha Registrado el Beneficiario Correctamente', 'success');
+        return redirect('tecnico/beneficiario/index');
     }
 
     /**
@@ -129,15 +175,14 @@ class BeneficiarioController extends Controller {
      */
     public function show($id) {
         //
-       try {
-        $beneficiario = BenefiriarioModel::getIdBeneficiario($id);
-        //dd($beneficiario);
-        return $beneficiario;
-
-    } catch (Exception $e) {
-        return $e;
+        try {
+            $beneficiario = BenefiriarioModel::getIdBeneficiario($id);
+            //dd($beneficiario);
+            return $beneficiario;
+        } catch (Exception $e) {
+            return $e;
+        }
     }
-}
 
     /**
      * Show the form for editing the specified resource.
@@ -149,9 +194,16 @@ class BeneficiarioController extends Controller {
         //
         $beneficiario = BenefiriarioModel::getIdBeneficiario($id);
         $estados = EstadoModel::all();
-        $canaimass = CanaimaModel::all(); 
+        $canaimass = CanaimaModel::all();
         return View('beneficiario.edit')->with('beneficiario', $beneficiario)->with('estados', $estados)->with('canaimass', $canaimass);
+    }
 
+    public function edit2($id) {
+        //
+        $beneficiario = BenefiriarioModel::getIdBeneficiario($id);
+        $estados = EstadoModel::all();
+        $canaimass = CanaimaModel::all();
+        return View('tecnico.beneficiario.edit')->with('beneficiario', $beneficiario)->with('estados', $estados)->with('canaimass', $canaimass);
     }
 
     /**
@@ -168,8 +220,8 @@ class BeneficiarioController extends Controller {
         $validator = Validator::make($request->all(), $this->rulesUpdate, $this->rulesMessages);
         if ($validator->fails()) {
             return redirect('beneficiario/' . $id . '/edit')
-            ->withErrors($validator)
-            ->withInput();
+                            ->withErrors($validator)
+                            ->withInput();
         }
         $beneficiario = BenefiriarioModel::find($id);
         if (is_null($beneficiario)) {
@@ -181,14 +233,43 @@ class BeneficiarioController extends Controller {
         $beneficiario->telefono = $request->get('telefono');
         $beneficiario->direccion = $request->get('direccion');
         $beneficiario->parroquia_id = $request->get('parroquia_id');
-        if ($beneficiario->save()){
+        if ($beneficiario->save()) {
+            $beneficiario->canaimas()->sync($request->get('canaimas'));
+        }
+
+        //Flash::success('Se ha Registrado el Beneficiario Correctamente');
+        notify()->flash('El Beneficiario  se ha actualizado correctamente', 'success');
+        return redirect()->route('beneficiario.index');
+        //
+    }
+
+    public function actualizar(Request $request, $id) {
+
+
+        $validator = Validator::make($request->all(), $this->rulesUpdate, $this->rulesMessages);
+        if ($validator->fails()) {
+            return redirect()->route('tecnico.beneficiario.edit', $id)
+                            ->withErrors($validator)
+                            ->withInput();
+        }
+        $beneficiario = BenefiriarioModel::find($id);
+        if (is_null($beneficiario)) {
+            notify()->flash('El Beneficiario no exite', 'error');
+            return redirect()->route('beneficiario.index');
+        }
+        $beneficiario->nombres = $request->get('nombres');
+        $beneficiario->apellidos = $request->get('apellidos');
+        $beneficiario->telefono = $request->get('telefono');
+        $beneficiario->direccion = $request->get('direccion');
+        $beneficiario->parroquia_id = $request->get('parroquia_id');
+        if ($beneficiario->save()) {
             $beneficiario->canaimas()->sync($request->get('canaimas'));
         }
 
 
         //Flash::success('Se ha Registrado el Beneficiario Correctamente');
         notify()->flash('El Beneficiario  se ha actualizado correctamente', 'success');
-        return redirect()->route('beneficiario.index');
+        return redirect()->route('tecnico.beneficiario.index');
         //
     }
 
@@ -198,7 +279,7 @@ class BeneficiarioController extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id) {
+    public function destroy2($id) {
         //
         $usuario = BenefiriarioModel::find($id);
         $usuario->delete();
@@ -224,7 +305,8 @@ class BeneficiarioController extends Controller {
     public function getCedulaBeneficiario($cedula) {
 
 
-     $beneficiario = BenefiriarioModel::getCedulaBeneficiario($cedula);
-     return $beneficiario;
- }
+        $beneficiario = BenefiriarioModel::getCedulaBeneficiario($cedula);
+        return $beneficiario;
+    }
+
 }

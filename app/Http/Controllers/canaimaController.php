@@ -43,6 +43,12 @@ class canaimaController extends Controller {
         return view('canaima.index')->with(array('canaimas' => $canaimas));
     }
 
+    public function index2() {
+//
+        $canaimas = CanaimaModel::listCanaima();
+        return view('tecnico.canaima.index')->with(array('canaimas' => $canaimas));
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -51,6 +57,11 @@ class canaimaController extends Controller {
     public function create() {
 //
         return view('canaima.create');
+    }
+
+    public function create2() {
+//
+        return view('tecnico.canaima.create');
     }
 
     /**
@@ -73,6 +84,22 @@ class canaimaController extends Controller {
 //Flash::success('Se ha Registrado el Beneficiario Correctamente');
         notify()->flash('Se ha Registrado el Modelo de Cainama Correctamente', 'success');
         return redirect()->route('canaima.index');
+    }
+
+    public function store2(Request $request) {
+//
+        $validator = Validator::make($request->all(), $this->rulesCreated, $this->rulesMessages);
+        if ($validator->fails()) {
+            return redirect('tecnico/canaima/create')
+                            ->withErrors($validator)
+                            ->withInput();
+        }
+        $canaima = new CanaimaModel();
+        $canaima->modelo = $request->get('modelo');
+        $canaima->save();
+//Flash::success('Se ha Registrado el Beneficiario Correctamente');
+        notify()->flash('Se ha Registrado el Modelo de Cainama Correctamente', 'success');
+        return redirect()->route('tecnico.canaima.index');
     }
 
     /**
@@ -102,6 +129,17 @@ class canaimaController extends Controller {
         }
     }
 
+    public function edit2($id) {
+//
+        $canaima = CanaimaModel::findOrFail($id);
+        if (!$canaima) {
+            notify()->flash('la canaima no exite verifique!', 'warning');
+            return redirect()->route('tecnico.canaima.index');
+        } else {
+            return View('tecnico.canaima.edit')->with('canaima', $canaima);
+        }
+    }
+
     /**
      * Update the specified resource in storage.
      *
@@ -128,6 +166,25 @@ class canaimaController extends Controller {
         return redirect()->route('canaima.index');
     }
 
+    public function update2(Request $request, $id) {
+        $validator = Validator::make($request->all(), $this->rulesUpdate, $this->rulesMessages);
+        if ($validator->fails()) {
+            return redirect('tecnico/canaima/' . $id . '/edit')
+                            ->withErrors($validator)
+                            ->withInput();
+        }
+        $canaima = CanaimaModel::find($id);
+        if (is_null($canaima)) {
+            notify()->flash('la canaima no exite', 'error');
+            return redirect()->route('tecnico.canaima.index');
+        }
+        $canaima = new CanaimaModel();
+        $canaima->modelo = $request->get('modelo');
+        $canaima->save();
+        notify()->flash('Se ha Actualizado el Modelo de Cainama Correctamente', 'success');
+        return redirect()->route('tecnico.canaima.index');
+    }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -148,6 +205,24 @@ class canaimaController extends Controller {
             if ($code == 23000) {
                 notify()->flash('No se puede eliminar porque esta asociado a un beneficiario', 'warning');
                 return redirect()->route('canaima.index');
+            }
+        }
+    }
+
+    public function eliminar($id) {
+        try {
+            $result = CanaimaModel::deleteCanaima($id);
+            if ($result == 100) {
+                notify()->flash('Se ha eliminado Safisfactoriamente', 'success');
+                return redirect()->route('tecnico.canaima.index');
+            }
+        } catch (Exception $e) {
+            Log::error('CanaimaController@getZonesByPoint: ' . $e->getMessage());
+            $code = $e->getCode();
+            $this->processingError($code);
+            if ($code == 23000) {
+                notify()->flash('No se puede eliminar porque esta asociado a un beneficiario', 'warning');
+                return redirect()->route('tecnico.canaima.index');
             }
         }
     }

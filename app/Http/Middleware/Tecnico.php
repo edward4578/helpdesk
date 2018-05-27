@@ -13,12 +13,13 @@ class Tecnico {
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next) {
+    public function handle($request, Closure $next) 
+    {
         if ($request->user()->rol_id != 3) {
             if ($request->ajax() || $request->wantsJson()) {
                 return response('No Autorizado.', 401);
             }
-            return redirect()->guest('login');
+        return redirect()->guest('login');
         }
 
         return $next($request);

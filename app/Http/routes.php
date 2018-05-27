@@ -68,6 +68,8 @@
     //Graficos 
     Route::get('graficos/general','GraficosController@ticketGeneradosTodos');
     
+    Route::get('graficos/infocentros','GraficosController@GraficosPorInfoncentro');
+    
     
     
     

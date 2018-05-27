@@ -127,4 +127,33 @@ class TicketModel extends Model
 
 		return $ticketAll;
 	}
+        
+        	public static function GraficoPorInfocentros(){
+
+		$ticketAll = DB::table('ticket')
+		->join('beneficiario_x_canaima', 'ticket.beneficiario_x_canaima_id', '=', 'beneficiario_x_canaima.id')
+		->join('Historialticket', 'ticket.id', '=', 'Historialticket.ticket_id')
+		->join('soluciones', 'Historialticket.soluciones_id', '=', 'soluciones.id')
+		->join('beneficiario', 'beneficiario_x_canaima.beneficiario_id', '=', 'beneficiario.id')
+		->join('users', 'ticket.users_id', '=', 'users.id')
+		->join('estatus', 'ticket.estatus_id', '=', 'estatus.id')
+		->join('fallas', 'ticket.falla_id', '=', 'fallas.id')
+                ->join('infocentros', 'users.infocentro_id', '=', 'infocentros.id')        
+		->select('ticket.id',
+			'ticket.fecha', 
+			'estatus.estatus', 
+			'fallas.falla',
+			'beneficiario.nombres',
+			'beneficiario.apellidos',
+			'soluciones.solucion',
+                        'infocentros.nombre_infocentro as infocentro',
+			'Historialticket.descripcion',
+			'Historialticket.created_at',
+			'Historialticket.updated_at'
+		)
+		->groupBy('infocentro')
+		->get();
+
+		return $ticketAll;
+	}
 }

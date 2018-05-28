@@ -119,4 +119,35 @@ Route::group(['middleware' => ['auth', 'tecnico']], function () {
     Route::get('tecnico/canaima/{id}/destroy', ['uses' => 'canaimaController@eliminar', 'as' => 'tecnico.canaima.destroy']);
     
     
+    
+    //crud de canaima  
+    Route::get('tecnico/falla', [ 'as' => 'tecnico.falla.index', 'uses' => 'FallasController@index2']);
+    //Formulario de Crear
+    Route::get('tecnico/falla/create', [ 'as' => 'tecnico.falla.create', 'uses' => 'FallasController@create2']);
+    //Crear Canaima
+    Route::post('tecnico/falla', 'FallasController@store2');
+    //Formulario de Editar Canaima
+    Route::get('tecnico/falla/{id}/edit', [ 'as' => 'tecnico.falla.edit', 'uses' => 'FallasController@edit2']);
+    //Actualizar
+    Route::put('tecnico/falla/{id}', [ 'as' => 'tecnico.falla.update', 'uses' => 'FallasController@update2']);
+    //Eliminar
+    Route::get('tecnico/falla/{id}/destroy', ['uses' => 'FallasController@eliminar', 'as' => 'tecnico.falla.destroy']);
+    
+    
+    
+     //crud de canaima  
+    Route::get('tecnico/solucion', [ 'as' => 'tecnico.solucion.index', 'uses' => 'SolucionesController@index2']);
+    //Formulario de Crear
+    Route::get('tecnico/solucion/create', [ 'as' => 'tecnico.solucion.create', 'uses' => 'SolucionesController@create2']);
+    //Crear Canaima
+    Route::post('tecnico/solucion', 'SolucionesController@store2');
+    //Formulario de Editar Canaima
+    Route::get('tecnico/solucion/{id}/edit', [ 'as' => 'tecnico.solucion.edit', 'uses' => 'SolucionesController@edit2']);
+    //Actualizar
+    Route::put('tecnico/solucion/{id}', [ 'as' => 'tecnico.solucion.update', 'uses' => 'SolucionesController@update2']);
+    //Eliminar Solucion
+    Route::get('tecnico/solucion/{id}/destroy', ['uses' => 'SolucionesController@eliminarSolucion', 'as' => 'tecnico.solucion.destroy']);
+    
+    
+    
 });

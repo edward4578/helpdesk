@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
 @section('contentheader_title')
-<h1>Lista de Beneficiarios</h1>
+<h1>Lista Infocentros</h1>
 @endsection
 @section('localizacion')
 <li><a href="#">Inicio</a></li>
-<li><a href="#">Beneficiarios</a></li>
-<li class="active">Lista de Beneficiarios</li>
+<li><a href="#">Infocentros</a></li>
+<li class="active">Lista de Infocentros</li>
 @endsection
 @section('main-content')
 
@@ -17,7 +17,7 @@
 <div class="col-xs-12">
     <div class="box">
         <div class="box-header">
-            <h3 class="box-title"><a class="btn btn-primary" href="{{ route('beneficiario.create') }}" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true">Agregar</span></a> </h3>
+            <h3 class="box-title"><a class="btn btn-primary" href="{{ route('facilitador.infocentro.create') }}" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true">Agregar</span></a> </h3>
         </div>
         <!-- /.box-header -->
         <div class="box-body table-responsive no-padding">
@@ -25,28 +25,26 @@
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Cedula</th>
-                        <th>Nombres</th>
-                        <th>Apellido</th>
-                        <th>Telefono</th>
-                        <th>Direcccion</th>
-                        <th></th>
+                        <th>Infocentro</th>
+                        <th>mir</th>
+                        <th>activo</th>
+                        <th>Opciones</th>
+                        
                     </tr>
                 </thead>
                 <tbody>         
-                    @foreach($beneficiarios as $item)
+                    @foreach($infocentros as $item)
                 <td>{!!$item->id!!}</td>
-                <td>{!!$item->cedula!!}</td>
-                <td>{!!$item->nombres!!}</td>
-                <td>{!!$item->apellidos!!}</td>   
-                <td>{!!$item->telefono!!}</td>
-                <td>{!!$item->direccion!!}</td>
-                <td><a class="btn btn-primary btn-xs"  href="{{ route('beneficiario.edit', $item->id) }}" role="button"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
-                     <a class="btn btn-default btn-xs" href="{{ route('beneficiario.show', $item->id) }}" role="button"><span class="fa  fa-list" aria-hidden="true"></span></a>
-                    <a class="btn btn-danger btn-xs" href="{{ route('beneficiario.destroy', $item->id) }}" role="button"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></a> 
-{!!link_to_route('beneficiario.reporteBenefiarioId', $title = 'Ver', $parameters = $item->id, $attributes = ['class'=> 'btn btn-info btn-xs', 'target'=>'_blank']) !!}
-               </td> 
-            </tbody>
+                <td>{!!$item->nombre_infocentro!!}</td>
+                <td>{!!$item->mir!!}</td>
+                @if ($item->activo == 1)   
+                <td><span class="btn btn-success" id="{!!$item->activo!!}">Activo</span></td>
+                @else
+                <td><span class="btn btn-warning" id="{!!$item->activo!!}">Inactivo</span></td>
+                @endif
+                <td><a class="btn btn-primary btn-xs"  href="{{ route('facilitador.infocentro.edit', $item->id) }}" role="button"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+                    <a class="btn btn-danger btn-xs" href="{{ route('facilitador.infocentro.destroy', $item->id) }}" role="button"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></a></td> 
+                </tbody>
                 @endforeach
             </table>
         </div>
@@ -87,7 +85,7 @@
         swal({
             title: "{!! notify()->message() !!}",
             text: "{!! notify()->option('text') !!}",
-            type: "{{ notify()->type() }}",
+            type: "{!! notify()->type() !!}",
         });
     </script>
 @endif

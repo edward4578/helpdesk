@@ -42,6 +42,13 @@ class FallasController extends Controller {
         return view('tecnico.falla.index')->with('fallas', $fallas);
     }
     
+    public function index3() {
+        //todos los Infocentros
+        $fallas = FallasModel::fallas();
+        return view('facilitador.falla.index')->with('fallas', $fallas);
+    }
+    
+    
     
     public function create() {
         // Creacion de una Falla
@@ -53,6 +60,12 @@ class FallasController extends Controller {
         return view('tecnico.falla.create');
     }
 
+    public function create3() {
+        // Creacion de una Falla
+        return view('facilitador.falla.create');
+    }
+    
+    
 
     public function store(Request $request) {
         $validator = Validator::make($request->all(), $this->rulesCreated, $this->rulesMessages);
@@ -84,6 +97,24 @@ class FallasController extends Controller {
     
     
     
+    
+    public function store3(Request $request) {
+        $validator = Validator::make($request->all(), $this->rulesCreated, $this->rulesMessages);
+        if ($validator->fails()) {
+            return redirect()->route('facilitador.falla.create')
+                            ->withErrors($validator)
+                            ->withInput();
+        }
+        $canaima = new FallasModel();
+        $canaima->falla = $request->get('falla');
+        $canaima->save();
+        notify()->flash('Se ha Registrado la Falla correctamente', 'success');
+        return redirect()->route('facilitador.falla.index');
+    }
+    
+    
+    
+    
     public function edit($id) {
 //
         $falla = FallasModel::findOrFail($id);
@@ -109,6 +140,23 @@ class FallasController extends Controller {
             return View('tecnico.falla.edit')->with('falla', $falla);
         }
     }
+    
+    
+    
+    
+    
+    public function edit3($id) {
+//
+        $falla = FallasModel::findOrFail($id);
+        if (!$falla) {
+            notify()->flash('la falla no exite verifique!', 'warning');
+            return redirect()->route('facilitador.falla.index');
+        } else {
+            return View('facilitador.falla.edit')->with('falla', $falla);
+        }
+    }
+    
+    
     
     public function update(Request $request, $id) {
         $validator = Validator::make($request->all(), $this->rulesUpdate, $this->rulesMessages);
@@ -148,6 +196,29 @@ class FallasController extends Controller {
         return redirect()->route('tecnico.falla.index');
     }
 
+    
+     public function update3(Request $request, $id) {
+        $validator = Validator::make($request->all(), $this->rulesUpdate, $this->rulesMessages);
+        if ($validator->fails()) {
+            return redirect('facilitador/falla/' . $id . '/edit')
+                            ->withErrors($validator)
+                            ->withInput();
+        }
+        $falla = FallasModel::find($id);
+        if (is_null($falla)) {
+            notify()->flash('la falla no exite', 'error');
+            return redirect()->route('facilitador.falla.index');
+        }
+        $falla->falla = $request->get('falla');
+        $falla->save();
+        notify()->flash('Se ha Actualizado la Falla Correctamente', 'success');
+        return redirect()->route('facilitador.falla.index');
+    }
+    
+    
+    
+    
+    
     public function destroy($id) {
         try {
             $result = FallasModel::deleteFalla($id);
@@ -182,6 +253,28 @@ class FallasController extends Controller {
             }
         }
     }
+    
+    
+    public function eliminar3($id) {
+        try {
+            $result = FallasModel::deleteFalla($id);
+            if ($result == 100) {
+                notify()->flash('Se ha eliminado Safisfactoriamente', 'success');
+                return redirect()->route('facilitador.falla.index');
+            }
+        } catch (Exception $e) {
+            Log::error('FallaController@eliminar: ' . $e->getMessage());
+            $code = $e->getCode();
+            $this->processingError($code);
+            if ($code == 23000) {
+                notify()->flash('No se puede eliminar porque esta asociado a un beneficiario', 'warning');
+                return redirect()->route('facilitador.falla.index');
+            }
+        }
+    }
+    
+    
+    
     
     
     

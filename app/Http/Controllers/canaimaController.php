@@ -49,6 +49,14 @@ class canaimaController extends Controller {
         return view('tecnico.canaima.index')->with(array('canaimas' => $canaimas));
     }
 
+    public function index3() {
+//
+        $canaimas = CanaimaModel::listCanaima();
+        return view('facilitador.canaima.index')->with(array('canaimas' => $canaimas));
+    }
+    
+    
+    
     /**
      * Show the form for creating a new resource.
      *
@@ -64,6 +72,14 @@ class canaimaController extends Controller {
         return view('tecnico.canaima.create');
     }
 
+    
+    public function create3() {
+//
+        return view('facilitador.canaima.create');
+    }
+    
+    
+    
     /**
      * Store a newly created resource in storage.
      *
@@ -102,6 +118,27 @@ class canaimaController extends Controller {
         return redirect()->route('tecnico.canaima.index');
     }
 
+    
+    public function store3(Request $request) {
+//
+        $validator = Validator::make($request->all(), $this->rulesCreated, $this->rulesMessages);
+        if ($validator->fails()) {
+            return redirect('facilitador/canaima/create')
+                            ->withErrors($validator)
+                            ->withInput();
+        }
+        $canaima = new CanaimaModel();
+        $canaima->modelo = $request->get('modelo');
+        $canaima->save();
+//Flash::success('Se ha Registrado el Beneficiario Correctamente');
+        notify()->flash('Se ha Registrado el Modelo de Cainama Correctamente', 'success');
+        return redirect()->route('facilitador.canaima.index');
+    }
+    
+    
+    
+    
+    
     /**
      * Display the specified resource.
      *
@@ -140,6 +177,20 @@ class canaimaController extends Controller {
         }
     }
 
+    
+    public function edit3($id) {
+//
+        $canaima = CanaimaModel::findOrFail($id);
+        if (!$canaima) {
+            notify()->flash('la canaima no exite verifique!', 'warning');
+            return redirect()->route('facilitador.canaima.index');
+        } else {
+            return View('facilitador.canaima.edit')->with('canaima', $canaima);
+        }
+    }
+    
+    
+    
     /**
      * Update the specified resource in storage.
      *
@@ -159,7 +210,6 @@ class canaimaController extends Controller {
             notify()->flash('la canaima no exite', 'error');
             return redirect()->route('canaima.index');
         }
-        $canaima = new CanaimaModel();
         $canaima->modelo = $request->get('modelo');
         $canaima->save();
         notify()->flash('Se ha Actualizado el Modelo de Cainama Correctamente', 'success');
@@ -178,13 +228,33 @@ class canaimaController extends Controller {
             notify()->flash('la canaima no exite', 'error');
             return redirect()->route('tecnico.canaima.index');
         }
-        $canaima = new CanaimaModel();
         $canaima->modelo = $request->get('modelo');
         $canaima->save();
         notify()->flash('Se ha Actualizado el Modelo de Cainama Correctamente', 'success');
         return redirect()->route('tecnico.canaima.index');
     }
 
+    
+     public function update3(Request $request, $id) {
+        $validator = Validator::make($request->all(), $this->rulesUpdate, $this->rulesMessages);
+        if ($validator->fails()) {
+            return redirect('facilitador/canaima/' . $id . '/edit')
+                            ->withErrors($validator)
+                            ->withInput();
+        }
+        $canaima = CanaimaModel::find($id);
+        if (is_null($canaima)) {
+            notify()->flash('la canaima no exite', 'error');
+            return redirect()->route('facilitador.canaima.index');
+        }
+        $canaima->modelo = $request->get('modelo');
+        $canaima->save();
+        notify()->flash('Se ha Actualizado el Modelo de Cainama Correctamente', 'success');
+        return redirect()->route('facilitador.canaima.index');
+    }
+    
+    
+    
     /**
      * Remove the specified resource from storage.
      *
@@ -226,7 +296,45 @@ class canaimaController extends Controller {
             }
         }
     }
+    
+        public function eliminar2($id) {
+        try {
+            $result = CanaimaModel::deleteCanaima($id);
+            if ($result == 100) {
+                notify()->flash('Se ha eliminado Safisfactoriamente', 'success');
+                return redirect()->route('tecnico.canaima.index');
+            }
+        } catch (Exception $e) {
+            Log::error('CanaimaController@getZonesByPoint: ' . $e->getMessage());
+            $code = $e->getCode();
+            $this->processingError($code);
+            if ($code == 23000) {
+                notify()->flash('No se puede eliminar porque esta asociado a un beneficiario', 'warning');
+                return redirect()->route('tecnico.canaima.index');
+            }
+        }
+    }
 
+    public function eliminar3($id) {
+        try {
+            $result = CanaimaModel::deleteCanaima($id);
+            if ($result == 100) {
+                notify()->flash('Se ha eliminado Safisfactoriamente', 'success');
+                return redirect()->route('facilitador.canaima.index');
+            }
+        } catch (Exception $e) {
+            Log::error('CanaimaController@getZonesByPoint: ' . $e->getMessage());
+            $code = $e->getCode();
+            $this->processingError($code);
+            if ($code == 23000) {
+                notify()->flash('No se puede eliminar porque esta asociado a un beneficiario', 'warning');
+                return redirect()->route('facilitador.canaima.index');
+            }
+        }
+    }
+    
+
+    
     public function getBeneficiarios(Request $request) {
         if ($request->ajax()) {
             $beneficiarios = BenefiriarioModel::beneficiarios();

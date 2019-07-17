@@ -7,35 +7,78 @@ use App\Http\Requests;
 use App\User;
 use DB;
 use Charts;
+use App\EstadoModel;
+use App\MunicipioModel;
+use App\ParroquiaModel;
+use App\BenefiriarioModel;
+use App\beneficiario_x_canaima;
+use App\TicketModel;
+use App\CanaimaModel;
+use Laracasts\Flash\Flash;
+use Illuminate\Support\Facades\Auth;
+use Yajra\Datatables\Facades\Datatables;
+use Validator;
+use Carbon\Carbon;
+use App;
 
-class ReporteController extends Controller
-{
+class ReporteController extends Controller {
+
     //
+    public function __construct() {
+        Carbon::setLocale('es');
+    }
 
-	public function mensuales()
-	{
-	//Pendientes
-	$pendientes = DB::table('ticket')->where('estatus_id','=',1)->count();
-	//Procesados
-	$procesados = DB::table('ticket')->where('estatus_id','=',2)->count();
-	//Rechazados
-	$rechazados = DB::table('ticket')->where('estatus_id','=',3)->count();
+    public function ReporteTicketPendientes(Request $request) {
+        $usuario = $request->user();
 
-		$chart = Charts::create('donut', 'highcharts')
-		->title('Ticket Generados')
-		->labels(['Procesados', 'Pendientes', 'Rechazados'])
-		 ->colors(['#42a5f5 ', '#ffca28', '#dd2c00' ])
-		->values([$procesados,$pendientes,$rechazados])
-		->dimensions(1000,500)
-		->responsive(false);
-		return view('reporte.mensual',['chart'=> $chart]);
-	}
-	public function pendientes()
-	{
-    	# code...
-	}
-	public function porProcesar()
-	{
-    	# code...
-	}
+
+        $ticket = TicketModel::ticketAll(1);
+        $view = view('reporte.repTikPendientes')->with('ticket', $ticket)
+                        ->with('usuario', $usuario)->render();
+
+        //PDF
+        $pdf = App::make('dompdf.wrapper');
+        $pdf->loadHTML($view)->setPaper('a4', 'landscape');
+        return $pdf->stream("TicketPendiente.pdf", array("Attachment" => 1));
+    }
+
+    public function ReporteTicketProcesados(Request $request) {
+        $usuario = $request->user();
+
+
+        $ticket = TicketModel::ticketCerrados(2);
+        //dd($ticket);
+        $view = view('reporte.repTikProcesados')->with('ticket', $ticket)
+                        ->with('usuario', $usuario)->render();
+
+        //PDF
+        $pdf = App::make('dompdf.wrapper');
+        $pdf->loadHTML($view)->setPaper('a4', 'landscape');
+        return $pdf->stream("TicketProcesados.pdf", array("Attachment" => 1));
+    }
+    
+    public function ReporteTicketRechazados(Request $request) {
+        $usuario = $request->user();
+
+
+        $ticket = TicketModel::ticketCerrados(3);
+        //dd($ticket);
+        $view = view('reporte.repTikRechazados')->with('ticket', $ticket)
+                        ->with('usuario', $usuario)->render();
+
+        //PDF
+        $pdf = App::make('dompdf.wrapper');
+        $pdf->loadHTML($view)->setPaper('a4', 'landscape');
+        return $pdf->stream("TicketRechazados.pdf", array("Attachment" => 1));
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 }

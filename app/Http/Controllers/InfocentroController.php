@@ -59,11 +59,26 @@ class InfocentroController extends Controller {
         return view('infocentro.index')->with('infocentros', $infocentros);
     }
 
+    public function index2() {
+        //todos los Infocentros
+        $infocentros = InfocentroModel::infocentros();
+        return view('facilitador.infocentro.index')->with('infocentros', $infocentros);
+    }
+    
+    
     public function create() {
         $estados = EstadoModel::all();
         return view('infocentro.create')->with('estados', $estados);
     }
 
+    public function create2() {
+        $estados = EstadoModel::all();
+        return view('facilitador.infocentro.create')->with('estados', $estados);
+    }
+    
+    
+    
+    
     public function store(Request $request) {
 
         $validator = Validator::make($request->all(), $this->rulesCreated, $this->rulesMessages);
@@ -87,6 +102,31 @@ class InfocentroController extends Controller {
         return redirect()->route('infocentro.index');
     }
 
+    public function store2(Request $request) {
+
+        $validator = Validator::make($request->all(), $this->rulesCreated, $this->rulesMessages);
+        if ($validator->fails()) {
+            return redirect('facilitador/infocentro/create')
+                            ->withErrors($validator)
+                            ->withInput();
+        }
+        $infocentro = new InfocentroModel();
+        $infocentro->mir = $request->get('mir');
+        $infocentro->nombre_infocentro = $request->get('nombre_infocentro');
+        $infocentro->descripcion = $request->get('descripcion');
+        $infocentro->activo = $request->get('activo');
+        $infocentro->direccion = $request->get('direccion');
+        $infocentro->estado_id = $request->get('estado_id');
+        $infocentro->municipio_id = $request->get('municipio_id');
+        $infocentro->parroquia_id = $request->get('parroquia_id');
+        $infocentro->save();
+        //Flash::success('Se ha Registrado el Infocentro Correctamente');
+        notify()->flash('Se ha Registrado el Infocentro Correctamente', 'success');
+        return redirect()->route('facilitador.infocentro.index');
+    }
+    
+    
+    
     public function edit($id) {
         $infocentro = InfocentroModel::findOrFail($id);
         if (!$infocentro) {
@@ -98,6 +138,18 @@ class InfocentroController extends Controller {
         }
     }
 
+    public function edit2($id) {
+        $infocentro = InfocentroModel::findOrFail($id);
+        if (!$infocentro) {
+            notify()->flash('El Infocentro no exite verifique!', 'warning');
+            return redirect()->route('facilitador.infocentro.index');
+        } else {
+            $estados = EstadoModel::all();
+            return View('facilitador.infocentro.edit')->with('infocentro', $infocentro)->with('estados', $estados);
+        }
+    }
+    
+    
     public function update(Request $request, $id) {
         $validator = Validator::make($request->all(), $this->rulesUpdate, $this->rulesMessages);
         if ($validator->fails()) {
@@ -123,6 +175,41 @@ class InfocentroController extends Controller {
         //
     }
 
+        public function updateDos(Request $request, $id) {
+        $validator = Validator::make($request->all(), $this->rulesUpdate, $this->rulesMessages);
+        if ($validator->fails()) {
+            return redirect('facilitador/infocentro/' . $id . '/edit')
+                            ->withErrors($validator)
+                            ->withInput();
+        }
+        $infocentro = InfocentroModel::find($id);
+        if (is_null($infocentro)) {
+            notify()->flash('El infocentro no exite', 'error');
+            return redirect()->route('infocentro.index');
+        }
+        $infocentro->mir = $request->get('mir');
+        $infocentro->nombre_infocentro = $request->get('nombre_infocentro');
+        $infocentro->descripcion = $request->get('descripcion');
+        $infocentro->activo = $request->get('activo');
+        $infocentro->direccion = $request->get('direccion');
+        $infocentro->parroquia_id = $request->get('parroquia_id');
+        $infocentro->save();
+        //Flash::success('Se ha Registrado el Beneficiario Correctamente');
+        notify()->flash('El infocentro se ha actualizado correctamente', 'success');
+        return redirect()->route('facilitador.infocentro.index');
+        //
+    }
+    public function InfocentroReporteId($id) {
+
+       $infocentros = infocentroModel::getIdBeneficiario($id);
+       $view = view('infocentro.ReporteInfocentroId')->with('infocentros',$infocentro);
+       
+       //PDF
+       $pdf = App::make('dompdf.wrapper');
+       $pdf->loadHTML($view);
+       return $pdf->stream('infocentro');
+    }
+    
     public function destroy() {
         
     }

@@ -25,15 +25,16 @@ class GraficosController extends Controller
 		->title('Total de Ticket Generados')
 		->labels(['Procesados', 'Pendientes', 'Rechazados'])
                 ->legend('ticket')
-		 //->colors(['#42a5f5 ', '#ffca28', '#dd2c00' ])
+		// ->colors(['#42a5f5 ', '#ffca28', '#dd2c00' ])
 		->values([$procesados,$pendientes,$rechazados])
 		->dimensions(600,400)
-		->responsive(false);
+		->responsive(true);
 		return view('grafico.general',['chart'=> $chart]);
 	}
-        public function GraficosPorInfoncentro(){
+        public function GraficosPorInfoncentro($infocentro){
             
-            $Ticket = TicketModel::GraficoPorInfocentros();
+            
+            $Ticket = TicketModel::GraficoPorInfocentros($infocentro);
             dd($Ticket);
             
         

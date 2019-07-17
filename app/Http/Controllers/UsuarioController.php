@@ -24,12 +24,19 @@ class UsuarioController extends Controller {
         $this->middleware('auth');
     }
 
-
     public function index() {
 
         //Lista de Usuarios Creados
         $usuarios = User::all();
         return view('usuario.index')->with('usuarios', $usuarios);
+        //dd($usuarios);
+    }
+
+    public function ListaUsuario() {
+
+        //Lista de Usuarios Consultado con el Perfil del Facilitador
+        $usuarios = User::all();
+        return view('facilitador.usuario.listaUsuario')->with('usuarios', $usuarios);
         //dd($usuarios);
     }
 
@@ -45,7 +52,12 @@ class UsuarioController extends Controller {
         return view('usuario.create')->with('roles', $roles)->with('infocentros', $infocentros);
     }
 
-    /**
+    public function crearUsuario() {
+        //Vista de Creacion Usuarios
+        $roles = rol::all();
+        $infocentros = InfocentroModel::all();
+        return view('facilitador.usuario.crearUsuario')->with('roles', $roles)->with('infocentros', $infocentros);
+    }    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -121,7 +133,7 @@ class UsuarioController extends Controller {
      */
     public function destroy($id) {
         //Elmininacion de un usuario
-        
+
         $usuario = User::find($id);
         $usuario->delete();
         //Flash::error('El usuario ' . $usuario->nombre_usuario . ' ');

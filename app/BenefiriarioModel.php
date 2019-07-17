@@ -40,8 +40,10 @@ class BenefiriarioModel extends Model {
         if (!$beneficiarioModel) {
             return response()->json(['error' => 'la Cedula no exite'], 404);
         }
+        
         $beneficiarioModel->parroquia->municipio->estado;
         $beneficiarioModel->canaimas;
+        
         return $beneficiarioModel;
     }
 

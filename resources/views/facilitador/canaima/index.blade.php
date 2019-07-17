@@ -1,23 +1,18 @@
 @extends('layouts.app')
 
 @section('contentheader_title')
-<h1>Lista de Beneficiarios</h1>
+<h1>Modelos de Canaimas Existentes</h1>
 @endsection
 @section('localizacion')
 <li><a href="#">Inicio</a></li>
-<li><a href="#">Beneficiarios</a></li>
-<li class="active">Lista de Beneficiarios</li>
+<li><a href="#">Canaima</a></li>
+<li class="active">Modelos de Canaimas</li>
 @endsection
+
 @section('main-content')
-
-
-<div class="row">	
-</div>
-
-<div class="col-xs-12">
     <div class="box">
         <div class="box-header">
-            <h3 class="box-title"><a class="btn btn-primary" href="{{ url('tecnico/beneficiario/create') }}" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true">Agregar</span></a> </h3>
+            <h3 class="box-title"><a class="btn btn-primary" href="{{ route('facilitador.canaima.create') }}" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true">Agregar</span></a> </h3>
         </div>
         <!-- /.box-header -->
         <div class="box-body table-responsive no-padding">
@@ -25,35 +20,32 @@
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Cedula</th>
-                        <th>Nombres</th>
-                        <th>Apellido</th>
-                        <th>Telefono</th>
-                        <th>Direcccion</th>
+                        <th>modelo</th>
+                        <th>Activo</th>
                         <th></th>
                     </tr>
                 </thead>
-                <tbody>         
-                    @foreach($beneficiarios as $item)
-                <td>{!!$item->id!!}</td>
-                <td>{!!$item->cedula!!}</td>
-                <td>{!!$item->nombres!!}</td>
-                <td>{!!$item->apellidos!!}</td>   
-                <td>{!!$item->telefono!!}</td>
-                <td>{!!$item->direccion!!}</td>
-                <td><a class="btn btn-primary btn-xs"  href="{{ route('tecnico.beneficiario.edit', $item->id) }}" role="button"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
-                      <a class="btn btn-default btn-xs" href="{{ route('tecnico.beneficiario.show', $item->id) }}" role="button"><span class="fa  fa-list" aria-hidden="true"></span></a> 
-                    <a class="btn btn-danger btn-xs" href="{{ route('beneficiario.destroy', $item->id) }}" role="button"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></a></td> 
-
-                </tbody>
+                @foreach($canaimas as $item)
+                <tbody>
+                    <tr data-id="{{$item->id}}">
+                        <td>{!!$item->id!!}</td>
+                        <td>{!!$item->modelo!!}</td>
+                        @if ($item->activo == 1)
+                        <td><span class="btn btn-xs btn-success">Activo</span></td> 
+                        @else
+                        <td><span class="btn btn-xs btn-warning">Desactivado</span></td>
+                        @endif
+                        <td>
+                            <a class="btn btn-primary btn-xs"  href="{{ route('facilitador.canaima.edit', $item->id) }}" role="button"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+                            <a class="btn btn-danger btn-xs"href="{{ route('facilitador.canaima.destroy', $item->id) }}"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></a>
+                        </td>
+                    <tr>
+                </tbody> 
                 @endforeach
             </table>
         </div>
         <!-- /.box-body -->
-    </div>  
-
-</div>
-
+    </div>
 @endsection
 @section('scripts')
 <script>
@@ -91,5 +83,3 @@
     </script>
 @endif
 @endsection
-
-

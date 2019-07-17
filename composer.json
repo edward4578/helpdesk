@@ -14,7 +14,7 @@
         "codecourse/notify": "^1.1",
         "nesbot/carbon": "^1.22",
         "consoletvs/charts": "5.*",
-        "barryvdh/laravel-dompdf": "^0.7.0"
+        "barryvdh/laravel-dompdf": "^0.8.2"
 
     },
     "require-dev": {

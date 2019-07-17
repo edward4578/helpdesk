@@ -17,7 +17,7 @@
 <div class="col-xs-12">
     <div class="box">
         <div class="box-header">
-            <h3 class="box-title"><a class="btn btn-primary" href="{{ route('beneficiario.create') }}" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true">Agregar</span></a> </h3>
+            <h3 class="box-title"><a class="btn btn-primary" href="{{ url('facilitador/beneficiario/create') }}" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true">Agregar</span></a> </h3>
         </div>
         <!-- /.box-header -->
         <div class="box-body table-responsive no-padding">
@@ -41,12 +41,12 @@
                 <td>{!!$item->apellidos!!}</td>   
                 <td>{!!$item->telefono!!}</td>
                 <td>{!!$item->direccion!!}</td>
-                <td><a class="btn btn-primary btn-xs"  href="{{ route('beneficiario.edit', $item->id) }}" role="button"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
-                     <a class="btn btn-default btn-xs" href="{{ route('beneficiario.show', $item->id) }}" role="button"><span class="fa  fa-list" aria-hidden="true"></span></a>
+                <td><a class="btn btn-primary btn-xs"  href="{{ route('facilitador.beneficiario.edit', $item->id) }}" role="button"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+                     <a class="btn btn-default btn-xs" href="{{ route('facilitador.beneficiario.show', $item->id) }}" role="button"><span class="fa  fa-list" aria-hidden="true"></span></a>
                     <a class="btn btn-danger btn-xs" href="{{ route('beneficiario.destroy', $item->id) }}" role="button"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></a> 
-{!!link_to_route('beneficiario.reporteBenefiarioId', $title = 'Ver', $parameters = $item->id, $attributes = ['class'=> 'btn btn-info btn-xs', 'target'=>'_blank']) !!}
-               </td> 
-            </tbody>
+{!!link_to_route('facilitador.beneficiario.reporteBenefiarioId', $title = 'Ver', $parameters = $item->id, $attributes = ['class'=> 'btn btn-info btn-xs', 'target' => '_blank']) !!}
+               </td>
+                </tbody>
                 @endforeach
             </table>
         </div>

@@ -14,6 +14,7 @@ use Laracasts\Flash\Flash;
 use Illuminate\Support\Facades\Auth;
 use Yajra\Datatables\Facades\Datatables;
 use Validator;
+use App;
 
 class BeneficiarioController extends Controller {
 
@@ -62,16 +63,25 @@ class BeneficiarioController extends Controller {
         'parroquia_id.exists' => 'la parroquia no exite!',
     );
 
+    //funcion exclusiva para el perfil de Administrador
     public function index() {
         //todos los Beneficiarios
         $beneficiarios = BenefiriarioModel::all();
         return view('beneficiario.index')->with('beneficiarios', $beneficiarios);
     }
 
+    //funcion exclusiva para el perfil de tecnico
     public function index2() {
         //todos los Beneficiarios
         $beneficiarios = BenefiriarioModel::all();
         return view('tecnico.beneficiario.index')->with('beneficiarios', $beneficiarios);
+    }
+
+    //funcion exclusiva para el perfil de facilitador
+    public function index3() {
+        //todos los Beneficiarios
+        $beneficiarios = BenefiriarioModel::all();
+        return view('facilitador.beneficiario.index')->with('beneficiarios', $beneficiarios);
     }
 
     /**
@@ -91,6 +101,13 @@ class BeneficiarioController extends Controller {
         $canaimas = CanaimaModel::all();
         $estados = EstadoModel::all();
         return view('tecnico.beneficiario.create')->with('estados', $estados)->with('canaimas', $canaimas);
+    }
+
+    public function create3() {
+        //
+        $canaimas = CanaimaModel::all();
+        $estados = EstadoModel::all();
+        return view('facilitador.beneficiario.create')->with('estados', $estados)->with('canaimas', $canaimas);
     }
 
     /**
@@ -167,6 +184,40 @@ class BeneficiarioController extends Controller {
         return redirect('tecnico/beneficiario/index');
     }
 
+    public function store3(Request $request) {
+
+        $validator = Validator::make($request->all(), $this->rulesCreated, $this->rulesMessages);
+        if ($validator->fails()) {
+            return redirect('facilitador/beneficiario/create')
+                            ->withErrors($validator)
+                            ->withInput();
+        }
+        $beneficiario = new BenefiriarioModel();
+        $beneficiario->cedula = $request->get('cedula');
+        $beneficiario->nombres = $request->get('nombres');
+        $beneficiario->apellidos = $request->get('apellidos');
+        $beneficiario->email = $request->get('email');
+        $beneficiario->telefono = $request->get('telefono');
+        $beneficiario->direccion = $request->get('direccion');
+        $beneficiario->parroquia_id = $request->get('parroquia_id');
+        if ($beneficiario->save()) {
+            $id = $beneficiario->id;
+            foreach ($request->modelo as $key => $v) {
+
+                $data = array('serial_canaima' => $request->serial [$key],
+                    'sol_can' => $request->robada,
+                    'descripcion' => $request->descripcion [$key],
+                    'beneficiario_id' => $id,
+                    'canaima_id' => $v);
+
+                beneficiario_x_canaima::insert($data);
+            }
+        }
+        //Flash::success('Se ha Registrado el Beneficiario Correctamente');
+        notify()->flash('Se ha Registrado el Beneficiario Correctamente', 'success');
+        return redirect()->route('facilitador.beneficiario.index');
+    }
+
     /**
      * Display the specified resource.
      *
@@ -177,8 +228,50 @@ class BeneficiarioController extends Controller {
         //
         try {
             $beneficiario = BenefiriarioModel::getIdBeneficiario($id);
-            //dd($beneficiario);
-            return $beneficiario;
+
+            // dd($beneficiario);
+            return view('beneficiario.show')->with('beneficiario', $beneficiario);
+        } catch (Exception $e) {
+            return $e;
+        }
+    }
+
+ 
+   public function beneficiarioReporteId(Request $request, $id) {
+
+       $usuario = $request->user();
+       
+       
+       $beneficiario = BenefiriarioModel::getIdBeneficiario($id);
+       $view = view('beneficiario.ReporteBeneficiarioId')->with('beneficiario',$beneficiario)
+               ->with('usuario',$usuario)->render();
+       
+       //PDF
+       $pdf = App::make('dompdf.wrapper');
+       $pdf->loadHTML($view);
+       return $pdf->stream("ReporteBeneficiario.pdf", array("Attachment"=>1));
+    }
+
+    //para la sesscion del Facilitador
+    public function show2($id) {
+        //
+        try {
+            $beneficiario = BenefiriarioModel::getIdBeneficiario($id);
+
+            // dd($beneficiario);
+            return view('facilitador.beneficiario.show')->with('beneficiario', $beneficiario);
+        } catch (Exception $e) {
+            return $e;
+        }
+    }
+
+    public function show3($id) {
+        //
+        try {
+            $beneficiario = BenefiriarioModel::getIdBeneficiario($id);
+
+            // dd($beneficiario);
+            return view('tecnico.beneficiario.show')->with('beneficiario', $beneficiario);
         } catch (Exception $e) {
             return $e;
         }
@@ -204,6 +297,14 @@ class BeneficiarioController extends Controller {
         $estados = EstadoModel::all();
         $canaimass = CanaimaModel::all();
         return View('tecnico.beneficiario.edit')->with('beneficiario', $beneficiario)->with('estados', $estados)->with('canaimass', $canaimass);
+    }
+
+    public function edit3($id) {
+        //
+        $beneficiario = BenefiriarioModel::getIdBeneficiario($id);
+        $estados = EstadoModel::all();
+        $canaimass = CanaimaModel::all();
+        return View('facilitador.beneficiario.edit')->with('beneficiario', $beneficiario)->with('estados', $estados)->with('canaimass', $canaimass);
     }
 
     /**
@@ -273,6 +374,36 @@ class BeneficiarioController extends Controller {
         //
     }
 
+    public function actualizar2(Request $request, $id) {
+
+
+        $validator = Validator::make($request->all(), $this->rulesUpdate, $this->rulesMessages);
+        if ($validator->fails()) {
+            return redirect()->route('facilitador.beneficiario.edit', $id)
+                            ->withErrors($validator)
+                            ->withInput();
+        }
+        $beneficiario = BenefiriarioModel::find($id);
+        if (is_null($beneficiario)) {
+            notify()->flash('El Beneficiario no exite', 'error');
+            return redirect()->route('facilitador.beneficiario.index');
+        }
+        $beneficiario->nombres = $request->get('nombres');
+        $beneficiario->apellidos = $request->get('apellidos');
+        $beneficiario->telefono = $request->get('telefono');
+        $beneficiario->direccion = $request->get('direccion');
+        $beneficiario->parroquia_id = $request->get('parroquia_id');
+        if ($beneficiario->save()) {
+            $beneficiario->canaimas()->sync($request->get('canaimas'));
+        }
+
+
+        //Flash::success('Se ha Registrado el Beneficiario Correctamente');
+        notify()->flash('El Beneficiario  se ha actualizado correctamente', 'success');
+        return redirect()->route('facilitador.beneficiario.index');
+        //
+    }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -280,6 +411,15 @@ class BeneficiarioController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function destroy2($id) {
+        //
+        $usuario = BenefiriarioModel::find($id);
+        $usuario->delete();
+        //Flash::error('El usuario ' . $usuario->nombre_usuario . ' ');
+        notify()->flash('El Beneficiario se ha sido eliminado correctamente', 'error');
+        return redirect()->route('usuario.index');
+    }
+
+    public function destroy3($id) {
         //
         $usuario = BenefiriarioModel::find($id);
         $usuario->delete();
@@ -308,5 +448,11 @@ class BeneficiarioController extends Controller {
         $beneficiario = BenefiriarioModel::getCedulaBeneficiario($cedula);
         return $beneficiario;
     }
+    
+    public function getCedulaBeneficiario2($cedula) {
 
+
+        $beneficiario = BenefiriarioModel::getCedulaBeneficiario($cedula);
+        return $beneficiario;
+    }
 }

@@ -136,4 +136,18 @@ class TicketModel extends Model {
         return $ticketAll;
     }
 
+        public static function GraficoPorFalla() {
+
+        $fallas = DB::table('ticket')                
+                ->join('users', 'ticket.users_id', '=', 'users.id')
+                ->join('infocentros', 'users.infocentro_id', '=', 'infocentros.id')
+                ->join('estatus', 'ticket.estatus_id', '=', 'estatus.id')
+                ->join('fallas', 'ticket.falla_id', '=', 'fallas.id')
+                ->select('fallas.falla as name', DB::raw('count(*) as data'))
+                ->groupBy('falla')
+                ->get();
+
+        return $fallas;
+    }
+
 }

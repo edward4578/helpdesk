@@ -81,6 +81,8 @@ Route::group(['middleware' => ['auth', 'administrador']], function () {
     //Graficos 
     Route::get('graficos/general', 'GraficosController@ticketGeneradosTodos');
     Route::get('graficos/infocentros/{id}', 'GraficosController@GraficosPorInfoncentro');
+    Route::get('graficos/fallas', 'GraficosController@GraficoPorFalla');
+
 
 //Reportes Generales 
     //ticket 

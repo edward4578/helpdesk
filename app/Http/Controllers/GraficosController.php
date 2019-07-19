@@ -32,22 +32,16 @@ class GraficosController extends Controller
 		return view('grafico.general',['chart'=> $chart]);
 	}
 	public function GraficosPorInfoncentro($infocentro){
-
-
 		$Ticket = TicketModel::GraficoPorInfocentros($infocentro);
 		dd($Ticket);
-
-
 	}
 
 	public function GraficoPorFalla(){
-
-
 		$fallas = TicketModel::GraficoPorFalla();
-		//dd($Fallas);
-			return view('grafico.falla')->with('fallas', $fallas);
-
-
-
+		return view('grafico.falla')->with('fallas', $fallas);
+	}
+	public function GraficoPorSoluciones(){
+		$soluciones = TicketModel::GraficoPorSoluciones();
+		return view('grafico.solucion')->with('soluciones', $soluciones);
 	}
 }

@@ -11,18 +11,18 @@
   |
  */
 
-Route::get('/', function () {
+  Route::get('/', function () {
     return view('welcome');
 });
 
-Route::group(['middleware' => ['auth', 'guest']], function () {
+  Route::group(['middleware' => ['auth', 'guest']], function () {
     // Authentication Routes...
     Route::get('login', 'Auth\AuthController@showLoginForm');
     Route::post('login', 'Auth\AuthController@login');
     Route::get('logout', 'Auth\AuthController@logout');
 });
 
-Route::group(['middleware' => ['auth']], function () {
+  Route::group(['middleware' => ['auth']], function () {
 
     Route::get('getFallas', 'FallasController@getFallas');
     Route::get('getSoluciones', 'SolucionesController@getSoluciones');
@@ -31,10 +31,10 @@ Route::group(['middleware' => ['auth']], function () {
 
 
 //Estados Municipiio y Parroquias AJAX
-Route::get('municipios/{id}', [ 'as' => 'municipios', 'uses' => 'BeneficiarioController@getMunicipios']);
-Route::get('parroquias/{id}', [ 'as' => 'parroquias', 'uses' => 'BeneficiarioController@getParroquias']);
+  Route::get('municipios/{id}', [ 'as' => 'municipios', 'uses' => 'BeneficiarioController@getMunicipios']);
+  Route::get('parroquias/{id}', [ 'as' => 'parroquias', 'uses' => 'BeneficiarioController@getParroquias']);
 
-Route::group(['middleware' => ['auth', 'administrador']], function () {
+  Route::group(['middleware' => ['auth', 'administrador']], function () {
     //
 //Crud de Usuario//
     Route::resource('usuario', 'UsuarioController');
@@ -82,6 +82,7 @@ Route::group(['middleware' => ['auth', 'administrador']], function () {
     Route::get('graficos/general', 'GraficosController@ticketGeneradosTodos');
     Route::get('graficos/infocentros/{id}', 'GraficosController@GraficosPorInfoncentro');
     Route::get('graficos/fallas', 'GraficosController@GraficoPorFalla');
+    Route::get('graficos/soluciones', 'GraficosController@GraficoPorSoluciones');
 
 
 //Reportes Generales 
@@ -103,7 +104,7 @@ Route::group(['middleware' => ['auth', 'administrador']], function () {
 
 
 //Perfil del tecnico
-Route::group(['middleware' => ['auth', 'tecnico']], function () {
+  Route::group(['middleware' => ['auth', 'tecnico']], function () {
 
 //Crud De Beneficiario
     Route::get('tecnico/beneficiario', [ 'as' => 'tecnico.beneficiario.index', 'uses' => 'BeneficiarioController@index2']);
@@ -164,7 +165,7 @@ Route::group(['middleware' => ['auth', 'tecnico']], function () {
 });
 
 //Perfil de Facilitador
-Route::group(['middleware' => ['auth', 'facilitador'], 'prefix' => 'facilitador'], function () {
+  Route::group(['middleware' => ['auth', 'facilitador'], 'prefix' => 'facilitador'], function () {
 
     //Lista de Usuarios
     Route::get('usuario', [ 'as' => 'facilitador.usuario.listaUsuario', 'uses' => 'UsuarioController@ListaUsuario']);

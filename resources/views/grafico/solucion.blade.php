@@ -6,7 +6,7 @@
 @section('localizacion')
 <li><a href="#">Inicio</a></li>
 <li><a href="#">Graficos</a></li>
-<li class="active">Graficos de Fallas</li>
+<li class="active">Graficos por Soluciones</li>
 @endsection
 @section('main-content')
 
@@ -45,13 +45,13 @@
 
         var data = google.visualization.arrayToDataTable([
           ['Fallas', 'total'],
-                @foreach ($fallas as $falla)
-                    ['{!! $falla->name !!}',{!! $falla->data !!}],
+                @foreach ($soluciones as $solucion)
+                    ['{!! $solucion->name !!}',{!! $solucion->data !!}],
                 @endforeach
         ]);
 
         var options = {
-          title: 'Cantidad de Fallas Generadas'
+          title: 'Soluciones más Comunes'
         };
 
         var chart = new google.visualization.PieChart(document.getElementById('piechart'));
